@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Shop" Class="ShopDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=CAESAR;Initial Catalog=Shop;Integrated Security=True" SettingsObjectName="Data.Properties.Settings" SettingsPropertyName="ShopConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=CAESAR;Initial Catalog=Shop;Integrated Security=True" SettingsObjectName="Access.Properties.Settings" SettingsPropertyName="ShopConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Accounts" Member="Accounts">
     <Type Name="Account">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -7,6 +7,21 @@
       <Column Name="Login" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="Password" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="User_Account" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IsAdmin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="RegistrationDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="User_Account" Member="Accounts" ThisKey="ID" OtherKey="UserID" Type="Account" />
+      <Association Name="User_Address" Member="Addresses" ThisKey="ID" OtherKey="UserID" Type="Address" />
+      <Association Name="User_LegalPerson" Member="LegalPersons" ThisKey="ID" OtherKey="UserID" Type="LegalPerson" />
+      <Association Name="User_Order" Member="Orders" ThisKey="ID" OtherKey="UserID" Type="Order" />
+      <Association Name="User_Producer" Member="Producers" ThisKey="ID" OtherKey="UserID" Type="Producer" />
     </Type>
   </Table>
   <Table Name="dbo.Addresses" Member="Addresses">
@@ -100,9 +115,9 @@
       <Column Name="CompliteDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Association Name="Order_OrdersProduct" Member="OrdersProducts" ThisKey="ID" OtherKey="OrderID" Type="OrdersProduct" />
       <Association Name="DeliveryType_Order" Member="DeliveryType" ThisKey="DeliveryTypeID" OtherKey="ID" Type="DeliveryType" IsForeignKey="true" />
+      <Association Name="User_Order" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="PayType_Order" Member="PayType" ThisKey="PayTypeID" OtherKey="ID" Type="PayType" IsForeignKey="true" />
       <Association Name="Statuse_Order" Member="Statuse" ThisKey="StatusID" OtherKey="ID" Type="Statuse" IsForeignKey="true" />
-      <Association Name="User_Order" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.OrdersProducts" Member="OrdersProducts">
@@ -149,21 +164,6 @@
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="Statuse_Order" Member="Orders" ThisKey="ID" OtherKey="StatusID" Type="Order" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Users" Member="Users">
-    <Type Name="User">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="IsAdmin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="RegistrationDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Association Name="User_Account" Member="Accounts" ThisKey="ID" OtherKey="UserID" Type="Account" />
-      <Association Name="User_Address" Member="Addresses" ThisKey="ID" OtherKey="UserID" Type="Address" />
-      <Association Name="User_LegalPerson" Member="LegalPersons" ThisKey="ID" OtherKey="UserID" Type="LegalPerson" />
-      <Association Name="User_Order" Member="Orders" ThisKey="ID" OtherKey="UserID" Type="Order" />
-      <Association Name="User_Producer" Member="Producers" ThisKey="ID" OtherKey="UserID" Type="Producer" />
     </Type>
   </Table>
 </Database>
