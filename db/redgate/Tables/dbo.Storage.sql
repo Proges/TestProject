@@ -7,6 +7,8 @@ CREATE TABLE [dbo].[Storage]
 [Credit] [int] NULL,
 [Date] [datetime] NOT NULL
 )
+ALTER TABLE [dbo].[Storage] ADD
+CONSTRAINT [FK_Storage_Users] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([ID])
 GO
 ALTER TABLE [dbo].[Storage] ADD CONSTRAINT [PK_Storage] PRIMARY KEY CLUSTERED  ([ID])
 GO

@@ -1,8 +1,7 @@
 CREATE TABLE [dbo].[Addresses]
 (
 [ID] [int] NOT NULL IDENTITY(1, 1),
-[Region] [nvarchar] (100) COLLATE Ukrainian_CI_AS NOT NULL,
-[City] [nvarchar] (100) COLLATE Ukrainian_CI_AS NOT NULL,
+[CityID] [int] NOT NULL,
 [Street] [nvarchar] (200) COLLATE Ukrainian_CI_AS NOT NULL,
 [House] [nvarchar] (50) COLLATE Ukrainian_CI_AS NOT NULL,
 [Housing] [nvarchar] (50) COLLATE Ukrainian_CI_AS NULL,
@@ -12,6 +11,8 @@ CREATE TABLE [dbo].[Addresses]
 [Floor] [int] NULL,
 [IsOffice] [bit] NULL
 )
+ALTER TABLE [dbo].[Addresses] ADD
+CONSTRAINT [FK_Addresses_Cities] FOREIGN KEY ([CityID]) REFERENCES [dbo].[Cities] ([ID])
 
 GO
 ALTER TABLE [dbo].[Addresses] ADD CONSTRAINT [PK_Individuals] PRIMARY KEY CLUSTERED  ([ID])
