@@ -1,7 +1,7 @@
 CREATE TABLE [dbo].[Users]
 (
 [ID] [int] NOT NULL IDENTITY(1, 1),
-[Loggin] [nvarchar] (100) COLLATE Ukrainian_CI_AS NOT NULL,
+[Login] [nvarchar] (100) COLLATE Ukrainian_CI_AS NOT NULL,
 [Password] [nvarchar] (100) COLLATE Ukrainian_CI_AS NOT NULL,
 [RoleID] [int] NOT NULL,
 [PersonID] [int] NOT NULL,
