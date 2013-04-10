@@ -51,6 +51,28 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LoggerTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Shop.Infrastructure.Factory.Tests\Shop.Infrastructure.Factory.Tests.csproj">
+      <Project>{486de3f3-bd3e-454d-84be-d4175d32e4f8}</Project>
+      <Name>Shop.Infrastructure.Factory.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.Infrastructure.Factory\Shop.Infrastructure.Factory.csproj">
+      <Project>{7e7aadf3-14a9-4e66-9f57-77856bcb1d26}</Project>
+      <Name>Shop.Infrastructure.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.Infrastructure.Logger.Contracts\Shop.Infrastructure.Logger.Contracts.csproj">
+      <Project>{bd9502a8-c3b4-4612-8c02-612e963ec0e9}</Project>
+      <Name>Shop.Infrastructure.Logger.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.Infrastructure.Logger\Shop.Infrastructure.Logger.csproj">
+      <Project>{d30dbeec-5108-4d09-94e6-583c137bd12f}</Project>
+      <Name>Shop.Infrastructure.Logger</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

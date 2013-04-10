@@ -1,6 +1,8 @@
-﻿using Microsoft.Practices.Unity;
+﻿using log4net;
+using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Shop.Infrastructure.Factory;
+using Shop.Infrastructure.Logger;
 using Shop.Infrastructure.Logger.Contracts;
 using System;
 using System.Collections.Generic;
@@ -19,8 +21,9 @@ namespace Shop.UI.Public.Controllers
 
         public ActionResult Index()
         {
-           return View();
+            var logger = Factory.GetComponent<ILogger>();
+            logger.InfoLog("TestProjectLog");
+            return View();
         }
-
     }
 }

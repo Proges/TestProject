@@ -8,6 +8,9 @@ namespace Shop.Infrastructure.Logger.Contracts
 {   
     public interface ILogger
     {
-        void WriteLog(string message);
+        void InfoLog(string message);
+        void WarningLog(string message);
+        void ErrorLog(string message);
+        void FatalLog(string message);
     }
 }
