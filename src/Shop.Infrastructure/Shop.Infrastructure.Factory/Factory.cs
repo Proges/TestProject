@@ -17,11 +17,7 @@ namespace Shop.Infrastructure.Factory
 
         static Factory()
         {
-            //TODO: make relative path
-            var s = AppDomain.CurrentDomain.BaseDirectory;
-            var fileMap = new ExeConfigurationFileMap { ExeConfigFilename = "D:\\ENTERPRISE\\Workshop\\TestProject\\src\\Shop.Infrastructure\\Shop.Infrastructure.Factory\\unity.config" };
-            var configuration = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-            var section = (UnityConfigurationSection)configuration.GetSection("unity");
+            var section = ConfigurationManager.GetSection("unity") as UnityConfigurationSection;
 
             _objectContainer = new UnityContainer();
             _repositoryContainer = new UnityContainer();

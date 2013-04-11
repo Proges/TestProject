@@ -21,8 +21,6 @@ namespace Shop.UI.Public.Controllers
 
         public ActionResult Index()
         {
-            var logger = Factory.GetComponent<ILogger>();
-            logger.InfoLog("TestProjectLog");
             return View();
         }
     }

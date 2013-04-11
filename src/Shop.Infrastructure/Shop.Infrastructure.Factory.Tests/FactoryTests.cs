@@ -46,6 +46,14 @@ namespace Shop.Infrastructure.Factory.Tests
         }
     }
 
+    class AnotherTestManager : ITestManager
+    {
+        public string Name
+        {
+            get { return "AnotherTestManager"; }
+        }
+    }
+
     [TestClass]
     public class FactoryTests
     {
@@ -59,6 +67,7 @@ namespace Shop.Infrastructure.Factory.Tests
             Assert.AreEqual("TestObject", testObject.Name);
             Assert.AreEqual("TestRepository", testRepository.Name);
             Assert.AreEqual("TestManager", testManager.Name);
+            Assert.AreNotEqual("AnotherTestManager", testManager.Name);
         }
     }
 }

@@ -17,31 +17,56 @@ namespace Shop.Infrastructure.Logger
 
         public Logger()
         {
-            //TODO: make relative path
-            FileInfo info = new FileInfo("D:\\ENTERPRISE\\Workshop\\TestProject\\src\\Shop.Infrastructure\\Shop.Infrastructure.Logger\\log4net.config");
-            XmlConfigurator.ConfigureAndWatch(info);
-            log = LogManager.GetLogger("ShopLogger"); 
-
+            log = LogManager.GetLogger("ShopLogger");
         }
-
+        
+       
         public void InfoLog(string message)
         {
+            string location = Assembly.GetCallingAssembly().GetName().Name;
+            GlobalContext.Properties["Location"] = location;
+            GlobalContext.Properties["Type"] = "INFO";
             log.Info(message);
         }
 
         public void WarningLog(string message)
         {
+            string location = Assembly.GetCallingAssembly().GetName().Name;
+            GlobalContext.Properties["Location"] = location;
+            GlobalContext.Properties["Type"] = "WARNING";
             log.Warn(message);
         }
 
         public void ErrorLog(string message)
         {
+            string location = Assembly.GetCallingAssembly().GetName().Name;
+            GlobalContext.Properties["Location"] = location;
+            GlobalContext.Properties["Type"] = "ERROR";
             log.Error(message);
         }
 
         public void FatalLog(string message)
         {
+            string location = Assembly.GetCallingAssembly().GetName().Name;
+            GlobalContext.Properties["Location"] = location;
+            GlobalContext.Properties["Type"] = "FATAL";
             log.Fatal(message);
+        }
+
+        public void DebugLog(string message)
+        {
+            string location = Assembly.GetCallingAssembly().GetName().Name;
+            GlobalContext.Properties["Location"] = location;
+            GlobalContext.Properties["Type"] = "DEBUG";
+            log.Debug(message);
+        }
+
+        public void ExceptionLog(Exception exception)
+        {
+            string location = Assembly.GetCallingAssembly().GetName().Name;
+            GlobalContext.Properties["Location"] = location;
+            GlobalContext.Properties["Type"] = "EXCEPTION";
+            log.Error(exception.Message);
         }
     }
 }

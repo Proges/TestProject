@@ -12,5 +12,7 @@ namespace Shop.Infrastructure.Logger.Contracts
         void WarningLog(string message);
         void ErrorLog(string message);
         void FatalLog(string message);
+        void DebugLog(string message);
+        void ExceptionLog(Exception exception);
     }
 }
