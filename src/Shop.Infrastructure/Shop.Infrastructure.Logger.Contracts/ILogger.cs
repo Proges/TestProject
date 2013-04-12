@@ -14,6 +14,11 @@ namespace Shop.Infrastructure.Logger.Contracts
         void FatalLog(string message);
         void DebugLog(string message);
         void ExceptionLog(Exception exception);
-        void WriteLogToDb(string location, string type, string message);
+        void InfoFormatLog(string format, params object[] args);
+        void WarningFormatLog(string format, params object[] args);
+        void ErrorFormatLog(string format, params object[] args);
+        void FatalFormatLog(string format, params object[] args);
+        void DebugFormatLog(string format, params object[] args);
+        void ExceptionFormatLog(string format, params object[] args);
     }
 }

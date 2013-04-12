@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Shop.Infrastructure.Factory
 {
     static public class Factory
@@ -30,10 +31,16 @@ namespace Shop.Infrastructure.Factory
                 ContainerElement repositoryElement = section.Containers["repositories"];
                 ContainerElement managerElement = section.Containers["managers"];
 
-                if (objectElement != null && repositoryElement != null && managerElement != null)
+                if (objectElement != null) 
                 {
                     objectElement.Configure(_objectContainer);
+                }
+                if(repositoryElement != null)
+                {
                     repositoryElement.Configure(_repositoryContainer);
+                }
+                if (managerElement != null)
+                {
                     managerElement.Configure(_managerContainer);
                 }
             }

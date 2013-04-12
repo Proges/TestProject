@@ -61,21 +61,28 @@
   <ItemGroup>
     <Compile Include="FactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data.Contracts\ITestComponent.cs" />
+    <Compile Include="Data.Contracts\ITestManager.cs" />
+    <Compile Include="Data.Contracts\ITestRepository.cs" />
+    <Compile Include="Data\AnotherTestManager.cs" />
+    <Compile Include="Data\TestComponent.cs" />
+    <Compile Include="Data\TestManager.cs" />
+    <Compile Include="Data\TestRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shop.Infrastructure.Factory\Shop.Infrastructure.Factory.csproj">
       <Project>{7e7aadf3-14a9-4e66-9f57-77856bcb1d26}</Project>
       <Name>Shop.Infrastructure.Factory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shop.Infrastructure.Logger\Shop.Infrastructure.Logger.csproj">
-      <Project>{d30dbeec-5108-4d09-94e6-583c137bd12f}</Project>
-      <Name>Shop.Infrastructure.Logger</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="unityTest.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

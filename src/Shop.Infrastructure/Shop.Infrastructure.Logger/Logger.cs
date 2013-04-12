@@ -11,98 +11,105 @@ using System.IO;
 using System.Data.SqlClient;
 using log4net.Repository.Hierarchy;
 using log4net.Appender;
+using System.Configuration;
 
 namespace Shop.Infrastructure.Logger
 {
     public class Logger : ILogger
     {
-        private readonly ILog log;
+        private ILog log;        
 
         public Logger()
         {
             log = LogManager.GetLogger("ShopLogger");
+
+            Hierarchy hierarchy = LogManager.GetLoggerRepository() as Hierarchy;
+
+            AdoNetAppender appender = (AdoNetAppender)hierarchy.GetAppenders()
+                        .Where(x => x.GetType() == typeof(AdoNetAppender))
+                        .FirstOrDefault();
+
+            appender.ConnectionString = ConfigurationManager.ConnectionStrings["ShopDbConnectionString"].ConnectionString;
+            appender.ActivateOptions();
         }        
        
         public void InfoLog(string message)
         {
-            string location = Assembly.GetCallingAssembly().GetName().Name;
             string type = "INFO";
-            log.InfoFormat("Date: {0}\nLocation: {1}\n" + type + ": {2}", DateTime.Now, location, message);
-            WriteLogToDb(location, type, message);
+            SetGlobalContext(type);
+            log.InfoFormat(message);
         }
 
         public void WarningLog(string message)
         {
-            string location = Assembly.GetCallingAssembly().GetName().Name;       
             string type = "WARNING";
-            log.WarnFormat("Date: {0}\nLocation: {1}\n" + type + ": {2}", DateTime.Now, location, message);
-            WriteLogToDb(location, type, message);
+            SetGlobalContext(type);
+            log.Warn(message);
         }
 
         public void ErrorLog(string message)
-        {
-            string location = Assembly.GetCallingAssembly().GetName().Name;
+        {               
             string type = "ERROR";
-            log.ErrorFormat("Date: {0}\nLocation: {1}\n" + type + ": {2}", DateTime.Now, location, message);
-            WriteLogToDb(location, type, message);
+            SetGlobalContext(type);
+            log.Error(message);           
         }
 
         public void FatalLog(string message)
-        {
-            string location = Assembly.GetCallingAssembly().GetName().Name;
+        {                
             string type = "FATAL";
-            log.FatalFormat("Date: {0}\nLocation: {1}\n" + type + ": {2}", DateTime.Now, location, message);
-            WriteLogToDb(location, type, message);
+            SetGlobalContext(type);
+            log.Fatal(message);
         }
 
         public void DebugLog(string message)
-        {
-            string location = Assembly.GetCallingAssembly().GetName().Name;
+        {                
             string type = "DEBUG";
-            log.DebugFormat("Date: {0}\nLocation: {1}\n" + type + ": {2}", DateTime.Now, location, message);
-            WriteLogToDb(location, type, message);
+            SetGlobalContext(type);
+            log.Debug(message);           
         }
 
         public void ExceptionLog(Exception exception)
-        {
-            string location = Assembly.GetCallingAssembly().GetName().Name;
+        {                
             string type = "EXCEPTION";
-            log.ErrorFormat("Date: {0}\nLocation: {1}\n" + type + ": {2}", DateTime.Now, location, exception.Message);
-            WriteLogToDb(location, type, exception.Message);
+            SetGlobalContext(type);
+            log.Error(exception.Message);
         }
 
-        public void WriteLogToDb(string location, string type, string message)
+        private void SetGlobalContext(string type)
         {
-            string conString = "";
+            GlobalContext.Properties["Location"] = Assembly.GetCallingAssembly().GetName().Name;
+            GlobalContext.Properties["Type"] = type;
+        }
 
-             var hierarchy = LogManager.GetRepository() as Hierarchy;
+       
+        public void InfoFormatLog(string format, params object[] args)
+        {
+            log.InfoFormat(format, args);
+        }
 
-             if (hierarchy != null && hierarchy.Configured)
-             {
-                 foreach (IAppender appender in hierarchy.GetAppenders())
-                 {
-                     if (appender is AdoNetAppender)
-                     {
-                         var adoNetAppender = (AdoNetAppender)appender;
-                         conString = adoNetAppender.ConnectionString;
-                         break;
-                     }
-                 }
-             }
+        public void WarningFormatLog(string format, params object[] args)
+        {
+            log.WarnFormat(format, args);
+        }
 
-             if (conString == "")
-             {
-                 return;
-             }
+        public void ErrorFormatLog(string format, params object[] args)
+        {
+            log.ErrorFormat(format, args);
+        }
 
-             using (SqlConnection con = new SqlConnection(conString))
-             {
-                 con.Open();                 
+        public void FatalFormatLog(string format, params object[] args)
+        {
+            log.FatalFormat(format, args);
+        }
 
-                 string sql = "INSERT INTO Logs (Date, Location, Type, Message) VALUES ('" + DateTime.Now + "', '" + location + "', '" + type + "', '" + message + "');";
-                 SqlCommand cmd = new SqlCommand(sql, con);
-                 cmd.ExecuteNonQuery();
-             }
+        public void DebugFormatLog(string format, params object[] args)
+        {
+            log.DebugFormat(format, args);
+        }
+
+        public void ExceptionFormatLog(string format, params object[] args)
+        {
+            log.ErrorFormat(format, args);
         }
     }
 }
