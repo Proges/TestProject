@@ -19,6 +19,7 @@ namespace Shop.Infrastructure.Logger.Tests
         string fatalLog = "FatalTEST";
         string debugLog = "DebugTest";
         string exceptionLog = new InvalidCastException().Message;
+        string conString = "Server=(local); database=ShopTest; Trusted_Connection=Yes;Integrated Security=true";
 
         [TestInitialize]
         public void InitTests()
@@ -71,12 +72,11 @@ namespace Shop.Infrastructure.Logger.Tests
         [TestMethod]
         public void DatabaseLogTest()
         {
-            string conString = "Server=(local); database=ShopTest; Trusted_Connection=Yes;Integrated Security=true";
-
+            string logMessages = "";
             using (SqlConnection con = new SqlConnection(conString))
             {
                 con.Open();
-                string logMessages = "";
+                
                 string sql = "SELECT [Message] FROM [ShopTest].[dbo].[Logs]";
                 SqlCommand cmd = new SqlCommand(sql, con);
                 var reader = cmd.ExecuteReader();
@@ -87,19 +87,17 @@ namespace Shop.Infrastructure.Logger.Tests
                 }
 
                 reader.Close();
-
-                Assert.IsTrue(logMessages.Contains(infoLog));
-                Assert.IsTrue(logMessages.Contains(warningLog));
-                Assert.IsTrue(logMessages.Contains(errorLog));
-                Assert.IsTrue(logMessages.Contains(fatalLog));
-                Assert.IsTrue(logMessages.Contains(debugLog));
-                Assert.IsTrue(logMessages.Contains(exceptionLog));
-
-                sql = @"DELETE FROM [ShopTest].[dbo].[Logs];";
-                cmd = new SqlCommand(sql, con);
-                cmd.ExecuteNonQuery();               
             }
-        }
+
+            Assert.IsTrue(logMessages.Contains(infoLog));
+            Assert.IsTrue(logMessages.Contains(warningLog));
+            Assert.IsTrue(logMessages.Contains(errorLog));
+            Assert.IsTrue(logMessages.Contains(fatalLog));
+            Assert.IsTrue(logMessages.Contains(debugLog));
+            Assert.IsTrue(logMessages.Contains(exceptionLog));
+        }    
+        
+
 
         [TestCleanup]
         public void CleanTests()
@@ -107,6 +105,14 @@ namespace Shop.Infrastructure.Logger.Tests
             if (path != "")
             {
                File.Delete(path);
+            }
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                var sql = @"DELETE FROM [ShopTest].[dbo].[Logs];";
+                var cmd = new SqlCommand(sql, con);
+                cmd.ExecuteNonQuery();
             }
         }
     }
