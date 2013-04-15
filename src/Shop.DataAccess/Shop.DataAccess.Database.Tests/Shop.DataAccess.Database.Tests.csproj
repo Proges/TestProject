@@ -51,6 +51,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DatabaseTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Shop.DataAccess.Database.Contracts\Shop.DataAccess.Database.Contracts.csproj">
+      <Project>{6b120486-3415-42f3-857b-c8a00f54cee4}</Project>
+      <Name>Shop.DataAccess.Database.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.DataAccess.Database\Shop.DataAccess.Database.csproj">
+      <Project>{3cca17e9-10a8-43c9-9e1e-3693938be90b}</Project>
+      <Name>Shop.DataAccess.Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

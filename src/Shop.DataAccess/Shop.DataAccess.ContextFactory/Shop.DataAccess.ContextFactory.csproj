@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,10 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Shop.DataAccess.ContextFactory.Contracts\Shop.DataAccess.ContextFactory.Contracts.csproj">
+      <Project>{afa90005-3493-4c1a-b23f-4dd5893df9db}</Project>
+      <Name>Shop.DataAccess.ContextFactory.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.DataAccess.Database\Shop.DataAccess.Database.csproj">
+      <Project>{3cca17e9-10a8-43c9-9e1e-3693938be90b}</Project>
+      <Name>Shop.DataAccess.Database</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

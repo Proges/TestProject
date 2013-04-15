@@ -12,5 +12,3 @@ ALTER TABLE [dbo].[Users] ADD CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED  ([ID]
 GO
 ALTER TABLE [dbo].[Users] ADD CONSTRAINT [FK_Users_Persons] FOREIGN KEY ([PersonID]) REFERENCES [dbo].[Persons] ([ID])
 GO
-ALTER TABLE [dbo].[Users] ADD CONSTRAINT [FK_Users_Roles] FOREIGN KEY ([RoleID]) REFERENCES [dbo].[Roles] ([ID])
-GO
