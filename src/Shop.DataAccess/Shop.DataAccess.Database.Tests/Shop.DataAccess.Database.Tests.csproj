@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,18 +52,73 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\Address.cs" />
+    <Compile Include="Data\Banner.cs" />
+    <Compile Include="Data\BannersImage.cs" />
+    <Compile Include="Data\Brand.cs" />
+    <Compile Include="Data\Category.cs" />
+    <Compile Include="Data\City.cs" />
+    <Compile Include="Data\Feedback.cs" />
+    <Compile Include="Data\Image.cs" />
+    <Compile Include="Data\LegalPerson.cs" />
+    <Compile Include="Data\Log.cs" />
+    <Compile Include="Data\Order.cs" />
+    <Compile Include="Data\OrderLine.cs" />
+    <Compile Include="Data\OrderStatus.cs" />
+    <Compile Include="Data\Person.cs" />
+    <Compile Include="Data\Product.cs" />
+    <Compile Include="Data\ProductsCategory.cs" />
+    <Compile Include="Data\ProductsImage.cs" />
+    <Compile Include="Data\ProductsSupplier.cs" />
+    <Compile Include="Data\Region.cs" />
+    <Compile Include="Data\ShopTest.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopTest.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\StorageRecord.cs" />
+    <Compile Include="Data\Supplier.cs" />
+    <Compile Include="Data\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DatabaseTests.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shop.Infrastructure\Shop.Infrastructure.Factory\Shop.Infrastructure.Factory.csproj">
+      <Project>{7e7aadf3-14a9-4e66-9f57-77856bcb1d26}</Project>
+      <Name>Shop.Infrastructure.Factory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shop.DataAccess.Database.Contracts\Shop.DataAccess.Database.Contracts.csproj">
       <Project>{6b120486-3415-42f3-857b-c8a00f54cee4}</Project>
       <Name>Shop.DataAccess.Database.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shop.DataAccess.Database\Shop.DataAccess.Database.csproj">
-      <Project>{3cca17e9-10a8-43c9-9e1e-3693938be90b}</Project>
-      <Name>Shop.DataAccess.Database</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Data\ShopTest.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>ShopTest.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="unityTest.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\ShopTest.dbml.layout">
+      <DependentUpon>ShopTest.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

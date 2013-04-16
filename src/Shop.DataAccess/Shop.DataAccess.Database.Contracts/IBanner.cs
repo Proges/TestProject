@@ -14,5 +14,6 @@ namespace Shop.DataAccess.Database.Contracts
         int SupplierID { get; set; }
         IList<IBannersImage> BannersImages { get; }
         ISupplier Supplier { get; set; }
+        EntitySet<IImage> Images { get; set; }
     }
 }

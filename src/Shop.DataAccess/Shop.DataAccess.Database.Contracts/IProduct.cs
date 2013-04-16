@@ -19,5 +19,8 @@ namespace Shop.DataAccess.Database.Contracts
          IList<IProductsSupplier> ProductsSuppliers { get; }
          IList<IStorageRecord> StorageRecords { get; set; }
          EntityRef<IBrand> Brand { get; set; }
+         EntitySet<ICategory> Categories { get; set; }
+         EntitySet<ISupplier> Suppliers { get; set; }
+         EntitySet<IImage> Images { get; set; } 
     }
 }

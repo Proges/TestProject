@@ -1,6 +1,6 @@
 CREATE TABLE [dbo].[Persons]
 (
-[ID] [int] NOT NULL,
+[ID] [int] NOT NULL IDENTITY(1, 1),
 [Name] [nvarchar] (100) COLLATE Ukrainian_CI_AS NOT NULL,
 [SecondName] [nvarchar] (100) COLLATE Ukrainian_CI_AS NOT NULL,
 [Patronymic] [nvarchar] (100) COLLATE Ukrainian_CI_AS NULL,
