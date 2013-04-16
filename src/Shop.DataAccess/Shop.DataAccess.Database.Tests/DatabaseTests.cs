@@ -40,6 +40,8 @@ namespace Shop.DataAccess.Database.Tests
         {
             context = new ShopTestDataContext();
 
+            ClearDatabase();
+
             address = Factory.GetComponent<IAddress>();
             banner = Factory.GetComponent<IBanner>();
             bannerImage = Factory.GetComponent<IBannersImage>();
@@ -67,6 +69,12 @@ namespace Shop.DataAccess.Database.Tests
         [TestCleanup]
         public void CleanupTests()
         {
+            ClearDatabase();
+        }
+
+
+        private void ClearDatabase()
+        {
             context.Addresses.DeleteAllOnSubmit(context.Addresses);
             context.Banners.DeleteAllOnSubmit(context.Banners);
             context.BannersImages.DeleteAllOnSubmit(context.BannersImages);
@@ -90,7 +98,6 @@ namespace Shop.DataAccess.Database.Tests
             context.Suppliers.DeleteAllOnSubmit(context.Suppliers);
             context.Users.DeleteAllOnSubmit(context.Users);
         }
-
 
         [TestMethod]
         public void DatabaseTests_Address()
@@ -412,7 +419,7 @@ namespace Shop.DataAccess.Database.Tests
 
             Assert.AreEqual("TestLocation", context.Logs.First().Location);
             Assert.AreEqual("TestMessage", context.Logs.First().Message);
-            Assert.AreEqual(date, context.Logs.First().Date);
+            Assert.AreEqual(date, context.Logs.First().Date.Date);
             Assert.AreEqual("TestType", context.Logs.First().Type);
 
             context.Logs.DeleteOnSubmit((Log)log);

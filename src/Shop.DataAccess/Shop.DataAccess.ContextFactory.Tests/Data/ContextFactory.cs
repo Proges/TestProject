@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.DataAccess.ContextFactory
+namespace Shop.DataAccess.ContextFactory.Tests
 {
     public class ContextFactory : IContextFactory
     {
-        private ShopDevDataContext _context = new ShopDevDataContext();
+        private ShopTestDataContext _context = new ShopTestDataContext();
 
         public DataContext GetContext()
-        {
-            return _context;
+        {          
+           return _context;
         }
 
         public void Commit()
@@ -25,7 +25,7 @@ namespace Shop.DataAccess.ContextFactory
 
         public void Rollback()
         {
-            _context = new ShopDevDataContext();
+            _context = new ShopTestDataContext();
         }
     }
 }
