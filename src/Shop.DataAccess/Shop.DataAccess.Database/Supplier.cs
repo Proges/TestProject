@@ -11,23 +11,10 @@ namespace Shop.DataAccess.Database
     public partial class Supplier : ISupplier
     {
         private EntitySet<IProduct> _products;
-        
-        int ISupplier.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
 
-        string ISupplier.Name
+        partial void OnCreated()
         {
-            get { return Name; }
-            set { Name = value; }
-        }
-
-        int ISupplier.AddressID
-        {
-            get { return AddressID; }
-            set { AddressID = value; }
+            _products = new EntitySet<IProduct>(OnAddProduct, OnRemoveProduct);
         }
 
         IList<IBanner> ISupplier.Banners
@@ -35,7 +22,7 @@ namespace Shop.DataAccess.Database
             get { return Banners.ToList<IBanner>(); }
             set
             {
-                Banners.Clear();
+                Banners = new EntitySet<Banner>();
                 Banners.AddRange(value.Cast<Banner>());
             }
         }
@@ -45,7 +32,7 @@ namespace Shop.DataAccess.Database
             get { return OrderLines.ToList<IOrderLine>(); }
             set
             {
-                OrderLines.Clear();
+                OrderLines = new EntitySet<OrderLine>();
                 OrderLines.AddRange(value.Cast<OrderLine>());
             }
         }
@@ -55,12 +42,10 @@ namespace Shop.DataAccess.Database
             get { return Persons.ToList<IPerson>(); }
             set
             {
-                Persons.Clear();
+                Persons = new EntitySet<Person>();
                 Persons.AddRange(value.Cast<Person>());
             }
-        }
-
-      
+        }      
 
         EntityRef<IAddress> ISupplier.Address
         {
@@ -88,16 +73,11 @@ namespace Shop.DataAccess.Database
             {
                 _products.Assign(value);
             }
-        }
-
-        partial void OnCreated()
-        {
-            _products = new EntitySet<IProduct>(OnAddProduct, OnRemoveProduct);
-        }
+        }       
 
         private void OnAddProduct(IProduct product)
         {
-            if (product != null && !Products.Contains(product))
+            if (product != null)
             {
                 ProductsSuppliers.Add(new ProductsSupplier { Supplier = this, Product = (Product)product });
             }
@@ -105,9 +85,9 @@ namespace Shop.DataAccess.Database
 
         private void OnRemoveProduct(IProduct product)
         {
-            if (product != null && Products.Contains(product))
+            if (product != null)
             {
-                var rProduct = ProductsSuppliers.FirstOrDefault(productSupplier => productSupplier.SupplierID == ID && productSupplier.ProductID == product.ID);
+                var rProduct = ProductsSuppliers.FirstOrDefault(productSupplier => productSupplier.ProductID == product.ID);
                 if (rProduct != null)
                 {
                     ProductsSuppliers.Remove(rProduct);

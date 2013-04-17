@@ -10,72 +10,12 @@ namespace Shop.DataAccess.Database
 {
     public partial class Address : IAddress
     {
-        int IAddress.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        int IAddress.CityID
-        {
-            get { return CityID; }
-            set { CityID = value; }
-        }
-
-        string IAddress.Street
-        {
-            get { return Street; }
-            set { Street = value; }
-        }
-
-        string IAddress.House
-        {
-            get { return House; }
-            set { House = value; }
-        }
-
-        string IAddress.Housing
-        {
-            get { return Housing; }
-            set { Housing = value; }
-        }
-
-        string IAddress.Building
-        {
-            get { return Building; }
-            set { Building = value; }
-        }
-
-        string IAddress.Porch
-        {
-            get { return Porch; }
-            set { Porch = value; }
-        }
-
-        string IAddress.IntercomeCode
-        {
-            get { return IntercomeCode; }
-            set { IntercomeCode = value; }
-        }
-
-        int? IAddress.Floor
-        {
-            get { return Floor; }
-            set { Floor = value; }
-        }
-
-        bool? IAddress.IsOffice
-        {
-            get { return IsOffice; }
-            set { IsOffice = value; }
-        }
-
         IList<IOrder> IAddress.Orders
         {
             get { return Orders.Cast<IOrder>().ToList(); }
             set
             {
-                Orders.Clear();
+                Orders = new EntitySet<Order>();
                 Orders.AddRange(value.Cast<Order>());
             }
         }
@@ -85,7 +25,7 @@ namespace Shop.DataAccess.Database
             get { return Persons.Cast<IPerson>().ToList(); }
             set
             {
-                Persons.Clear();
+                Persons = new EntitySet<Person>();
                 Persons.AddRange(value.Cast<Person>());
             }
         }
@@ -95,7 +35,7 @@ namespace Shop.DataAccess.Database
             get { return Suppliers.Cast<ISupplier>().ToList(); }
             set
             {
-                Suppliers.Clear();
+                Suppliers = new EntitySet<Supplier>();
                 Suppliers.AddRange(value.Cast<Supplier>());
             }
         }

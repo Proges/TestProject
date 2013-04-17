@@ -10,30 +10,6 @@ namespace Shop.DataAccess.Database.Tests
 {
     public partial class OrdersStatus : IOrdersStatus
     {
-        int IOrdersStatus.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        int IOrdersStatus.OrderID
-        {
-            get { return OrderID; }
-            set { OrderID = value; }
-        }
-
-        int IOrdersStatus.StatusID
-        {
-            get { return StatusID; }
-            set { StatusID = value; }
-        }
-
-        DateTime IOrdersStatus.Date
-        {
-            get { return Date; }
-            set { Date = value; }
-        }
-
         EntityRef<IOrder> IOrdersStatus.Order
         {
             get { return new EntityRef<IOrder>(); }

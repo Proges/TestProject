@@ -48,8 +48,8 @@
     <Compile Include="City.cs" />
     <Compile Include="Enumerators\DeliverType.cs" />
     <Compile Include="Enumerators\PayType.cs" />
-    <Compile Include="Enumerators\Role.cs" />
-    <Compile Include="Enumerators\Status.cs" />
+    <Compile Include="Enumerators\UserRole.cs" />
+    <Compile Include="Enumerators\OrderStatus.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="LegalPerson.cs" />

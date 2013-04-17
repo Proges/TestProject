@@ -9,13 +9,17 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.ContextFactory.Tests
 {
-    public class ContextFactory : IContextFactory
+    public class ContextFactory : IContextFactory, IDisposable
     {
         private ShopTestDataContext _context = new ShopTestDataContext();
 
         public DataContext GetContext()
-        {          
-           return _context;
+        {
+            if (_context == null)
+            {
+                _context = new ShopTestDataContext();
+            }
+            return _context;
         }
 
         public void Commit()
@@ -25,7 +29,17 @@ namespace Shop.DataAccess.ContextFactory.Tests
 
         public void Rollback()
         {
-            _context = new ShopTestDataContext();
+            _context = null;
+        }
+
+        public ChangeSet GetChanges
+        {
+            get { return _context.GetChangeSet(); }
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

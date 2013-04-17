@@ -10,60 +10,6 @@ namespace Shop.DataAccess.Database
 {
     public partial class Order : IOrder
     {
-        int IOrder.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        int IOrder.UserID
-        {
-            get { return UserID; }
-            set { UserID = value; }
-        }
-
-        int IOrder.AddressID
-        {
-            get { return AddressID; }
-            set { AddressID = value; }
-        }
-
-        DateTime IOrder.CreatedDate
-        {
-            get { return CreatedDate; }
-            set { CreatedDate = value; }
-        }
-
-        TimeSpan IOrder.DeliveryTimeFrom
-        {
-            get { return DeliveryTimeFrom; }
-            set { DeliveryTimeFrom = value; }
-        }
-
-        TimeSpan IOrder.DeliveryTimeTo
-        {
-            get { return DeliveryTimeTo; }
-            set { DeliveryTimeTo = value; }
-        }
-
-        DateTime IOrder.DeliveredDate
-        {
-            get { return DeliveredDate; }
-            set { DeliveredDate = value; }
-        }
-
-        int IOrder.DeliveryTypeID
-        {
-            get { return DeliveryTypeID; }
-            set { DeliveryTypeID = value; }
-        }
-
-        int IOrder.PayTypeID
-        {
-            get { return PayTypeID; }
-            set { PayTypeID = value; }
-        }
-
         IList<IOrderLine> IOrder.OrderLines
         {
             get
@@ -72,7 +18,7 @@ namespace Shop.DataAccess.Database
             }
             set
             {
-                OrderLines.Clear();
+                OrderLines = new EntitySet<OrderLine>();
                 OrderLines.AddRange(value.Cast<OrderLine>());
             }
         }
@@ -84,8 +30,8 @@ namespace Shop.DataAccess.Database
                 return OrdersStatus.ToList<IOrdersStatus>();
             }
             set
-            {
-                OrdersStatus.Clear();
+            {                
+                OrdersStatus = new EntitySet<OrdersStatus>();
                 OrdersStatus.AddRange(value.Cast<OrdersStatus>());
             }
         }

@@ -1,6 +1,7 @@
 ﻿using Shop.DataAccess.Database.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,42 +10,6 @@ namespace Shop.DataAccess.Database.Tests
 {
     public partial class User : IUser
     {
-        int IUser.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        string IUser.Login
-        {
-            get { return Login; }
-            set { Login = value; }
-        }
-
-        string IUser.Password
-        {
-            get { return Password; }
-            set { Password = value; }
-        }
-
-        int IUser.RoleID
-        {
-            get { return RoleID; }
-            set { RoleID = value; }
-        }
-
-        int IUser.PersonID
-        {
-            get { return PersonID; }
-            set { PersonID = value; }
-        }
-
-        DateTime IUser.RegistrationDate
-        {
-            get { return RegistrationDate; }
-            set { RegistrationDate = value; }
-        }
-
         IList<IFeedback> IUser.Feedbacks
         {
             get
@@ -53,7 +18,7 @@ namespace Shop.DataAccess.Database.Tests
             }
             set
             {
-                Feedbacks.Clear();
+                Feedbacks = new EntitySet<Feedback>();
                 Feedbacks.AddRange(value.Cast<Feedback>());
             }
         }
@@ -66,7 +31,7 @@ namespace Shop.DataAccess.Database.Tests
             }
             set
             {
-                Orders.Clear();
+                Orders = new EntitySet<Order>();
                 Orders.AddRange(value.Cast<Order>());
             }
         }
@@ -79,7 +44,7 @@ namespace Shop.DataAccess.Database.Tests
             }
             set
             {
-                StorageRecords.Clear();
+                StorageRecords = new EntitySet<StorageRecord>();
                 StorageRecords.AddRange(value.Cast<StorageRecord>());
             }
         }

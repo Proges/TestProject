@@ -12,22 +12,10 @@ namespace Shop.DataAccess.Database
     {
         private EntitySet<IImage> _images;
 
-        int IBanner.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
 
-        string IBanner.Name
+        partial void OnCreated()
         {
-            get { return Name; }
-            set { Name = value; }
-        }
-
-        int IBanner.SupplierID
-        {
-            get { return SupplierID; }
-            set { SupplierID = value; }
+            _images = new EntitySet<IImage>(OnAddImage, OnRemoveImage);
         }
 
         ISupplier IBanner.Supplier
@@ -61,15 +49,11 @@ namespace Shop.DataAccess.Database
                 _images.Assign(value);
             }
         }
-
-        partial void OnCreated()
-        {
-            _images = new EntitySet<IImage>(OnAddImage, OnRemoveImage);
-        }
+              
 
         private void OnAddImage(IImage image)
         {
-            if (image != null && !Images.Contains(image))
+            if (image != null)
             {
                 BannersImages.Add(new BannersImage { Banner = this, Image = (Image)image });
             }
@@ -77,9 +61,9 @@ namespace Shop.DataAccess.Database
 
         private void OnRemoveImage(IImage image)
         {
-            if (image != null && Images.Contains(image))
+            if (image != null)
             {
-                var rImage = BannersImages.FirstOrDefault(bannerImage => bannerImage.BannerID == ID && bannerImage.ImageID == image.ID);
+                var rImage = BannersImages.FirstOrDefault(bannerImage => bannerImage.ImageID == image.ID);
                 if (rImage != null)
                 {
                     BannersImages.Remove(rImage);

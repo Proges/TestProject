@@ -10,24 +10,6 @@ namespace Shop.DataAccess.Database.Tests
 {
     public partial class City : ICity
     {
-        int ICity.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        string ICity.Name
-        {
-            get { return Name; }
-            set { Name = value; }
-        }
-
-        int ICity.RegionID
-        {
-            get { return RegionID; }
-            set { RegionID = value; }
-        }
-
         IList<IAddress> ICity.Addresses
         {
             get
@@ -36,7 +18,7 @@ namespace Shop.DataAccess.Database.Tests
             }
             set
             {
-                Addresses.Clear();
+                Addresses = new EntitySet<Address>();
                 Addresses.AddRange(value.Cast<Address>());
             }
         }

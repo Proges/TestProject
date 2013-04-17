@@ -52,8 +52,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Data\ContextFactory.cs" />
     <Compile Include="ContextFactoryTests.cs" />
+    <Compile Include="Data\ContextFactory.cs" />
     <Compile Include="Data\Log.cs" />
     <Compile Include="Data\ShopTest.designer.cs">
       <DependentUpon>ShopTest.dbml</DependentUpon>

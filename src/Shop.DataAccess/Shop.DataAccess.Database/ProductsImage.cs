@@ -10,18 +10,6 @@ namespace Shop.DataAccess.Database
 {
     public partial class ProductsImage : IProductsImage
     {
-        int IProductsImage.ProductID
-        {
-            get { return ProductID; }
-            set { ProductID = value; }
-        }
-
-        int IProductsImage.ImageID
-        {
-            get { return ImageID; }
-            set { ImageID = value; }
-        }
-
         EntityRef<IImage> IProductsImage.Image
         {
             get { return new EntityRef<IImage>(Image); }

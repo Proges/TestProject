@@ -15,38 +15,11 @@ namespace Shop.DataAccess.Database
         private EntitySet<ISupplier> _suppliers;
 
 
-        int IProduct.ID
+        partial void OnCreated()
         {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        string IProduct.Name
-        {
-            get { return Name; }
-            set { Name = value; }
-        }
-
-        int IProduct.Price
-        {
-            get { return Price; }
-            set
-            {
-                if (value >= 0)
-                {
-                    Price = value;
-                }
-                else
-                {
-                    Price = 0;
-                }
-            }
-        }
-
-        int IProduct.BrandID
-        {
-            get { return BrandID; }
-            set { BrandID = value; }
+            _images = new EntitySet<IImage>(OnAddImage, OnRemoveImage);
+            _suppliers = new EntitySet<ISupplier>(OnAddSupplier, OnRemoveSupplier);
+            _categories = new EntitySet<ICategory>(OnAddCategories, OnRemoveCategories);
         }
 
         IList<IOrderLine> IProduct.OrderLines
@@ -57,7 +30,7 @@ namespace Shop.DataAccess.Database
             }
             set
             {
-                OrderLines.Clear();
+                OrderLines = new EntitySet<OrderLine>();
                 OrderLines.AddRange(value.Cast<OrderLine>());
             }
         }             
@@ -70,7 +43,7 @@ namespace Shop.DataAccess.Database
             }
             set
             {
-                StorageRecords.Clear();
+                StorageRecords = new EntitySet<StorageRecord>();
                 StorageRecords.AddRange(value.Cast<StorageRecord>());
             }
         }
@@ -153,18 +126,11 @@ namespace Shop.DataAccess.Database
             {
                 _suppliers.Assign(value);
             } 
-        }        
-
-        partial void OnCreated()
-        {
-            _images = new EntitySet<IImage>(OnAddImage, OnRemoveImage);
-            _suppliers = new EntitySet<ISupplier>(OnAddSupplier, OnRemoveSupplier);
-            _categories = new EntitySet<ICategory>(OnAddCategories, OnRemoveCategories);
-        }
+        }      
 
         private void OnAddImage(IImage image)
         {
-            if (image != null && !Images.Contains(image))
+            if (image != null)
             {
                 ProductsImages.Add(new ProductsImage { Product = this, Image = (Image)image });
             }
@@ -172,9 +138,9 @@ namespace Shop.DataAccess.Database
 
         private void OnRemoveImage(IImage image)
         {
-            if (image != null && Images.Contains(image))
+            if (image != null)
             {
-                var rImage = ProductsImages.FirstOrDefault(productImage => productImage.ImageID == image.ID && productImage.ProductID == ID);
+                var rImage = ProductsImages.FirstOrDefault(productImage => productImage.ImageID == image.ID);
 
                 if (rImage != null)
                 {
@@ -185,7 +151,7 @@ namespace Shop.DataAccess.Database
 
         private void OnAddCategories(ICategory category)
         {
-            if (category != null && !Categories.Contains(category))
+            if (category != null)
             {
                 ProductsCategories.Add(new ProductsCategory { Product = this, Category = (Category)category });
             }
@@ -193,9 +159,9 @@ namespace Shop.DataAccess.Database
 
         private void OnRemoveCategories(ICategory category)
         {
-            if (category != null && Categories.Contains(category))
+            if (category != null)
             {
-                var rCategory = ProductsCategories.FirstOrDefault(productCategory => productCategory.CategoryID == category.ID && productCategory.ProductID == ID);
+                var rCategory = ProductsCategories.FirstOrDefault(productCategory => productCategory.CategoryID == category.ID);
 
                 if (rCategory != null)
                 {
@@ -206,7 +172,7 @@ namespace Shop.DataAccess.Database
 
         private void OnAddSupplier(ISupplier supplier)
         {
-            if (supplier != null && !Suppliers.Contains(supplier))
+            if (supplier != null)
             {
                 ProductsSuppliers.Add(new ProductsSupplier { Product = this, Supplier = (Supplier)supplier });
             }
@@ -214,15 +180,15 @@ namespace Shop.DataAccess.Database
 
         private void OnRemoveSupplier(ISupplier supplier)
         {
-            if (supplier != null && Suppliers.Contains(supplier))
+            if (supplier != null)
             {
-                var rSupplier = ProductsSuppliers.FirstOrDefault(productSupplier => productSupplier.SupplierID == supplier.ID && productSupplier.ProductID == ID);
+                var rSupplier = ProductsSuppliers.FirstOrDefault(productSupplier => productSupplier.SupplierID == supplier.ID);
 
                 if (rSupplier != null)
                 {
                     ProductsSuppliers.Remove(rSupplier);
                 }
             }
-        }               
+        }       
     }
 }

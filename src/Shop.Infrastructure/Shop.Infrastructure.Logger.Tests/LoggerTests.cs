@@ -55,12 +55,8 @@ namespace Shop.Infrastructure.Logger.Tests
             path = AppDomain.CurrentDomain.BaseDirectory + "/Log.log";
         }
 
-
-        [TestMethod]
-        public void LoggerTests_InfoLog()
+        private bool Contains(string logString, string path)
         {
-            var logString = "";
-
             using (StreamReader sr = new StreamReader(path))
             {
                 string line;
@@ -72,280 +68,99 @@ namespace Shop.Infrastructure.Logger.Tests
                     }
                     if (line.Contains(infoLog))
                     {
-                        logString += line;
-                        break;
+                        return true;
                     }
                 }
+                return false;
             }
-            Assert.IsTrue(logString.Contains(infoLog));
+        }
+
+
+        [TestMethod]
+        public void LoggerTests_InfoLog()
+        {                       
+            Assert.IsTrue(Contains(infoLog, path));
         }
 
         [TestMethod]
         public void LoggerTests_WarningLog()
         {
-            var logString = "";
-
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(warningLog))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(warningLog));
+           Assert.IsTrue(Contains(warningLog, path));
         }
 
         [TestMethod]
         public void LoggerTests_ErrorLog()
-        {
-            var logString = "";
-
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(errorLog))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(errorLog));
+        {            
+            Assert.IsTrue(Contains(errorLog, path));
         }
 
         [TestMethod]
         public void LoggerTests_FatalLog()
         {
-            var logString = "";
-
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(fatalLog))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(fatalLog));
+            Assert.IsTrue(Contains(fatalLog, path));
         }
 
         [TestMethod]
         public void LoggerTests_DebugLog()
-        {
-            var logString = "";
-
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(debugLog))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(debugLog));
+        {           
+            Assert.IsTrue(Contains(debugLog, path));            
         }
 
         [TestMethod]
         public void LoggerTests_ExceptionLog()
-        {
-            var logString = "";
-
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(exceptionLog))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(exceptionLog));
+        {           
+            Assert.IsTrue(Contains(exceptionLog, path));
         }
-
 
         [TestMethod]
         public void LoggerTests_InfoFormatLog()
-        {
-            var logString = "";
-            var formatString = String.Format(infoFormatLog, infoLog);
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(formatString))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(formatString));
+        {            
+            var formatString = String.Format(infoFormatLog, infoLog);           
+           
+            Assert.IsTrue(Contains(formatString, path));
         }
 
 
         [TestMethod]
         public void LoggerTests_WarningFormatLog()
         {
-            var logString = "";
             var formatString = String.Format(warningFormatLog, warningLog);
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(formatString))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(formatString));
+            
+            Assert.IsTrue(Contains(formatString, path));
         }
 
         [TestMethod]
         public void LoggerTests_ErrorFormatLog()
         {
-            var logString = "";
             var formatString = String.Format(errorFormatLog, errorLog);
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(formatString))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(formatString));
+            
+            Assert.IsTrue(Contains(formatString, path));
         }
 
         [TestMethod]
         public void LoggerTests_FatalFormatLog()
-        {
-            var logString = "";
+        {            
             var formatString = String.Format(fatalFormatLog, fatalLog);
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(formatString))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(formatString));
+            
+            Assert.IsTrue(Contains(formatString, path));
         }
 
 
         [TestMethod]
         public void LoggerTests_DebugFormatLog()
-        {
-            var logString = "";
+        {           
             var formatString = String.Format(debugFormatLog, debugLog);
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(formatString))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(formatString));
+           
+            Assert.IsTrue(Contains(formatString, path));
         }
 
 
         [TestMethod]
         public void LoggerTests_ExceptionFormatLog()
         {
-            var logString = "";
             var formatString = String.Format(exceptionFormatLog, exceptionLog);
-            using (StreamReader sr = new StreamReader(path))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
-                    if (line.Contains(formatString))
-                    {
-                        logString += line;
-                        break;
-                    }
-                }
-            }
-            Assert.IsTrue(logString.Contains(formatString));
+            
+            Assert.IsTrue(Contains(formatString, path));
         }
 
         [TestMethod]

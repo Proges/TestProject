@@ -1559,7 +1559,7 @@ namespace Shop.DataAccess.ContextFactory.Tests
 		
 		private EntitySet<ProductsCategory> _ProductsCategories;
 		
-		private EntityRef<Category> _Category1;
+		private EntityRef<Category> _ParentCategory;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1579,7 +1579,7 @@ namespace Shop.DataAccess.ContextFactory.Tests
 		{
 			this._Categories = new EntitySet<Category>(new Action<Category>(this.attach_Categories), new Action<Category>(this.detach_Categories));
 			this._ProductsCategories = new EntitySet<ProductsCategory>(new Action<ProductsCategory>(this.attach_ProductsCategories), new Action<ProductsCategory>(this.detach_ProductsCategories));
-			this._Category1 = default(EntityRef<Category>);
+			this._ParentCategory = default(EntityRef<Category>);
 			OnCreated();
 		}
 		
@@ -1614,7 +1614,7 @@ namespace Shop.DataAccess.ContextFactory.Tests
 			{
 				if ((this._ParentCategoryID != value))
 				{
-					if (this._Category1.HasLoadedOrAssignedValue)
+					if (this._ParentCategory.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1693,26 +1693,26 @@ namespace Shop.DataAccess.ContextFactory.Tests
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Category", Storage="_Category1", ThisKey="ParentCategoryID", OtherKey="ID", IsForeignKey=true)]
-		public Category Category1
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Category", Storage="_ParentCategory", ThisKey="ParentCategoryID", OtherKey="ID", IsForeignKey=true)]
+		public Category ParentCategory
 		{
 			get
 			{
-				return this._Category1.Entity;
+				return this._ParentCategory.Entity;
 			}
 			set
 			{
-				Category previousValue = this._Category1.Entity;
+				Category previousValue = this._ParentCategory.Entity;
 				if (((previousValue != value) 
-							|| (this._Category1.HasLoadedOrAssignedValue == false)))
+							|| (this._ParentCategory.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Category1.Entity = null;
+						this._ParentCategory.Entity = null;
 						previousValue.Categories.Remove(this);
 					}
-					this._Category1.Entity = value;
+					this._ParentCategory.Entity = value;
 					if ((value != null))
 					{
 						value.Categories.Add(this);
@@ -1722,7 +1722,7 @@ namespace Shop.DataAccess.ContextFactory.Tests
 					{
 						this._ParentCategoryID = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Category1");
+					this.SendPropertyChanged("ParentCategory");
 				}
 			}
 		}
@@ -1750,13 +1750,13 @@ namespace Shop.DataAccess.ContextFactory.Tests
 		private void attach_Categories(Category entity)
 		{
 			this.SendPropertyChanging();
-			entity.Category1 = this;
+			entity.ParentCategory = this;
 		}
 		
 		private void detach_Categories(Category entity)
 		{
 			this.SendPropertyChanging();
-			entity.Category1 = null;
+			entity.ParentCategory = null;
 		}
 		
 		private void attach_ProductsCategories(ProductsCategory entity)

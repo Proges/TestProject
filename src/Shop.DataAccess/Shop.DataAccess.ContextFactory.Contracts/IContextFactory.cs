@@ -9,7 +9,8 @@ namespace Shop.DataAccess.ContextFactory.Contracts
 {
     public interface IContextFactory
     {
-        DataContext GetContext();
+        ChangeSet GetChanges { get; }
+        DataContext GetContext();        
         void Commit();
         void Rollback();
     }

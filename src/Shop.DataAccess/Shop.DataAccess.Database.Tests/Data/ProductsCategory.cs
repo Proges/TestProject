@@ -10,11 +10,6 @@ namespace Shop.DataAccess.Database.Tests
 {
     public partial class ProductsCategory : IProductsCategory
     {
-        int IProductsCategory.ProductID
-        {
-            get { return ProductID; }
-            set { ProductID = value; }
-        }
         EntityRef<IProduct> IProductsCategory.Product
         {
             get { return new EntityRef<IProduct>(Product); }

@@ -21,16 +21,7 @@ namespace Shop.Infrastructure.Logger
 
         public Logger()
         {
-            log = LogManager.GetLogger("ShopLogger");
-
-            Hierarchy hierarchy = LogManager.GetLoggerRepository() as Hierarchy;
-
-            AdoNetAppender appender = (AdoNetAppender)hierarchy.GetAppenders()
-                        .Where(x => x.GetType() == typeof(AdoNetAppender))
-                        .FirstOrDefault();
-
-            appender.ConnectionString = ConfigurationManager.ConnectionStrings["ShopDbConnectionString"].ConnectionString;
-            appender.ActivateOptions();
+            log = LogManager.GetLogger("ShopLogger");            
         }        
        
         public void InfoLog(string message)

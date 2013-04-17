@@ -1,6 +1,7 @@
 ﻿using Shop.DataAccess.Database.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,24 +10,6 @@ namespace Shop.DataAccess.Database.Tests
 {
     public partial class Brand : IBrand
     {
-        int IBrand.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        string IBrand.Name
-        {
-            get { return Name; }
-            set { Name = value; }
-        }
-
-        int? IBrand.LogoID
-        {
-            get { return LogoID; }
-            set { LogoID = value; }
-        }
-
         IList<IProduct> IBrand.Products
         {
             get
@@ -35,7 +18,7 @@ namespace Shop.DataAccess.Database.Tests
             }
             set
             {
-                Products.Clear();
+                Products = new EntitySet<Product>();
                 Products.AddRange(value.Cast<Product>());
             }
         }

@@ -12,28 +12,10 @@ namespace Shop.DataAccess.Database.Tests
     {
         private EntitySet<IProduct> _products;
 
-        int ICategory.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
 
-        int? ICategory.ParentCategoryID
+        partial void OnCreated()
         {
-            get { return ParentCategoryID; }
-            set { ParentCategoryID = value; }
-        }
-
-        string ICategory.Name
-        {
-            get { return Name; }
-            set { Name = value; }
-        }
-
-        string ICategory.Description
-        {
-            get { return Description; }
-            set { Description = value; }
+            _products = new EntitySet<IProduct>(OnAddProduct, OnRemoveProduct);
         }
 
         IList<ICategory> ICategory.Categories
@@ -44,7 +26,7 @@ namespace Shop.DataAccess.Database.Tests
             }
             set
             {
-                Categories.Clear();
+                Categories = new EntitySet<Category>();
                 Categories.AddRange(value.Cast<Category>());
             }
         }
@@ -57,10 +39,10 @@ namespace Shop.DataAccess.Database.Tests
             }           
         }
 
-        EntityRef<ICategory> ICategory.Category1
+        EntityRef<ICategory> ICategory.ParentCategory
         {
-            get { return new EntityRef<ICategory>(Category1); }
-            set { Category1 = (Category)value.Entity; }
+            get { return new EntityRef<ICategory>(ParentCategory); }
+            set { ParentCategory = (Category)value.Entity; }
         }
 
 
@@ -79,17 +61,11 @@ namespace Shop.DataAccess.Database.Tests
             {
                 _products.Assign(value);
             }
-        }
-
-
-        partial void OnCreated()
-        {
-            _products = new EntitySet<IProduct>(OnAddProduct, OnRemoveProduct);
-        }
+        }     
 
         private void OnAddProduct(IProduct product)
         {
-            if (product != null && !Products.Contains(product))
+            if (product != null)
             {
                 ProductsCategories.Add(new ProductsCategory { Category = this, Product = (Product)product });
             }
@@ -97,9 +73,9 @@ namespace Shop.DataAccess.Database.Tests
 
         private void OnRemoveProduct(IProduct product)
         {
-            if (product != null && Products.Contains(product))
+            if (product != null)
             {
-                var rProduct = ProductsCategories.FirstOrDefault(productCategory => productCategory.ProductID == product.ID && productCategory.CategoryID == ID);
+                var rProduct = ProductsCategories.FirstOrDefault(productCategory => productCategory.ProductID == product.ID);
 
                 if (rProduct != null)
                 {

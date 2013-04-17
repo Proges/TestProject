@@ -257,7 +257,7 @@ namespace Shop.DataAccess.Database.Tests
 
             subCategory.Name = "TestSubCategory";
             subCategory.Description = "";
-            subCategory.Category1 = new EntityRef<ICategory>(category);
+            subCategory.ParentCategory = new EntityRef<ICategory>(category);
 
             context.Categories.InsertOnSubmit((Category)category);
             context.Categories.InsertOnSubmit((Category)subCategory);
@@ -611,7 +611,7 @@ namespace Shop.DataAccess.Database.Tests
 
             subCategory.Name = "TestSubCategory";
             subCategory.Description = "";
-            subCategory.Category1 = new EntityRef<ICategory>(category);
+            subCategory.ParentCategory = new EntityRef<ICategory>(category);
 
             var anotherCategory = Factory.GetComponent<ICategory>();
             anotherCategory.Name = "AnotherTestCategory";

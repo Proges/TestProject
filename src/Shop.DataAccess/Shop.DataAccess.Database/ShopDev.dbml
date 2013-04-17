@@ -66,7 +66,7 @@
       <Column Name="Description" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
       <Association Name="Category_Category" Member="Categories" ThisKey="ID" OtherKey="ParentCategoryID" Type="Category" />
       <Association Name="Category_ProductsCategory" Member="ProductsCategories" ThisKey="ID" OtherKey="CategoryID" Type="ProductsCategory" />
-      <Association Name="Category_Category" Member="Category1" ThisKey="ParentCategoryID" OtherKey="ID" Type="Category" IsForeignKey="true" />
+      <Association Name="Category_Category" Member="ParentCategory" ThisKey="ParentCategoryID" OtherKey="ID" Type="Category" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Cities" Member="Cities">

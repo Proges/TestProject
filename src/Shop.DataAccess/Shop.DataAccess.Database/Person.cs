@@ -10,60 +10,6 @@ namespace Shop.DataAccess.Database
 {
     public partial class Person : IPerson
     {
-        int IPerson.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        string IPerson.Name
-        {
-            get { return Name; }
-            set { Name = value; }
-        }
-
-        string IPerson.SecondName
-        {
-            get { return SecondName; }
-            set { SecondName = value; }
-        }
-
-        string IPerson.Patronymic
-        {
-            get { return Patronymic; }
-            set { Patronymic = value; }
-        }
-
-        DateTime IPerson.BirthDate
-        {
-            get { return BirthDate; }
-            set { BirthDate = value; }
-        }
-
-        string IPerson.Email
-        {
-            get { return Email; }
-            set { Email = value; }
-        }
-
-        string IPerson.Phone
-        {
-            get { return Phone; }
-            set { Phone = value; }
-        }
-
-        int IPerson.AddressID
-        {
-            get { return AddressID; }
-            set { AddressID = value; }
-        }
-
-        int? IPerson.SupplierID
-        {
-            get { return SupplierID; }
-            set { SupplierID = value; }
-        }
-
         IList<IUser> IPerson.Users
         {
             get
@@ -72,7 +18,7 @@ namespace Shop.DataAccess.Database
             }
             set
             {
-                Users.Clear();
+                Users = new EntitySet<User>();
                 Users.AddRange(value.Cast<User>());
             }
         }
@@ -85,7 +31,7 @@ namespace Shop.DataAccess.Database
             }
             set
             {
-                LegalPersons.Clear();
+                LegalPersons = new EntitySet<LegalPerson>();
                 LegalPersons.AddRange(value.Cast<LegalPerson>());
             }
         }

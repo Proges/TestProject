@@ -9,34 +9,6 @@ namespace Shop.DataAccess.Database.Tests
 {
     public partial class Log : ILog
     {
-        int ILog.ID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        DateTime ILog.Date
-        {
-            get { return Date; }
-            set { Date = value; }
-        }
-
-        string ILog.Type
-        {
-            get { return Type; }
-            set { Type = value; }
-        }
-
-        string ILog.Location
-        {
-            get { return Location; }
-            set { Location = value; }
-        }
-
-        string ILog.Message
-        {
-            get { return Message; }
-            set { Message = value; }
-        }
+        
     }
 }

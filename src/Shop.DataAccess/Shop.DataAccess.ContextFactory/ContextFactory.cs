@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.ContextFactory
 {
-    public class ContextFactory : IContextFactory
+    public class ContextFactory : IContextFactory, IDisposable
     {
         private ShopDevDataContext _context = new ShopDevDataContext();
 
         public DataContext GetContext()
         {
+            if (_context == null)
+            {
+                _context = new ShopDevDataContext();
+            }
             return _context;
         }
 
@@ -25,7 +29,17 @@ namespace Shop.DataAccess.ContextFactory
 
         public void Rollback()
         {
-            _context = new ShopDevDataContext();
+            _context = null;
+        }
+
+        public ChangeSet GetChanges
+        {
+            get { return _context.GetChangeSet(); }
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

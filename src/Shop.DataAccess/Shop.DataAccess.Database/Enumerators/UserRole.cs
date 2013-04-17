@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Enumerators
 {
-    enum Role
+    enum UserRole
     {
         Admin = 1,
         Customer = 2

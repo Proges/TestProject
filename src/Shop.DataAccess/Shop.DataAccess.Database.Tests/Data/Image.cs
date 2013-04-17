@@ -14,22 +14,10 @@ namespace Shop.DataAccess.Database.Tests
         private EntitySet<IProduct> _products;
 
 
-        int IImage.ID
+        partial void OnCreated()
         {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        string IImage.Name
-        {
-            get { return Name; }
-            set { Name = value; }
-        }
-
-        string IImage.URL
-        {
-            get { return URL; }
-            set { URL = value; }
+            _banners = new EntitySet<IBanner>(OnAddBanner, OnRemoveBanner);
+            _products = new EntitySet<IProduct>(OnAddProduct, OnRemoveProduct);
         }
 
         IList<IBannersImage> IImage.BannersImages
@@ -48,7 +36,7 @@ namespace Shop.DataAccess.Database.Tests
             }
             set
             {
-                Brands.Clear();
+                Brands = new EntitySet<Brand>();
                 Brands.AddRange(value.Cast<Brand>());
             }
         }
@@ -96,16 +84,9 @@ namespace Shop.DataAccess.Database.Tests
             }
         }
 
-
-        partial void OnCreated()
-        {
-            _banners = new EntitySet<IBanner>(OnAddBanner, OnRemoveBanner);
-            _products = new EntitySet<IProduct>(OnAddProduct, OnRemoveProduct);
-        }
-
         private void OnAddBanner(IBanner banner)
         {
-            if (banner != null && !Banners.Contains(banner))
+            if (banner != null)
             {
                 BannersImages.Add(new BannersImage { Image = this, Banner = (Banner)banner });
             }
@@ -113,9 +94,9 @@ namespace Shop.DataAccess.Database.Tests
 
         private void OnRemoveBanner(IBanner banner)
         {
-            if (banner != null && Banners.Contains(banner))
+            if (banner != null)
             {
-                var rBanner = BannersImages.FirstOrDefault(bannersImages => bannersImages.BannerID == banner.ID && bannersImages.ImageID == ID);
+                var rBanner = BannersImages.FirstOrDefault(bannersImages => bannersImages.BannerID == banner.ID);
                 BannersImages.Remove(rBanner);
             }
         }        
@@ -132,7 +113,7 @@ namespace Shop.DataAccess.Database.Tests
         {
             if (product != null && Products.Contains(product))
             {
-                var rProduct = ProductsImages.FirstOrDefault(productsImages => productsImages.ProductID == product.ID && productsImages.ImageID == ID);
+                var rProduct = ProductsImages.FirstOrDefault(productsImages => productsImages.ProductID == product.ID);
                 ProductsImages.Remove(rProduct);
             }
         }

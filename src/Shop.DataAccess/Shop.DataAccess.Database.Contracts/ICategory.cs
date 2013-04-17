@@ -15,6 +15,6 @@ namespace Shop.DataAccess.Database.Contracts
         string Description { get; set; }
         IList<ICategory>  Categories { get; set; }
         IList<IProductsCategory> ProductsCategories { get; }
-        EntityRef<ICategory> Category1 { get; set; }
+        EntityRef<ICategory> ParentCategory { get; set; }
     }
 }
