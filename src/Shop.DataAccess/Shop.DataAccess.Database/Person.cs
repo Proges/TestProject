@@ -36,16 +36,16 @@ namespace Shop.DataAccess.Database
             }
         }
 
-        EntityRef<IAddress> IPerson.Address
+        IAddress IPerson.Address
         {
-            get { return new EntityRef<IAddress>(Address); }
-            set { Address = (Address)value.Entity; }
+            get { return  Address; }
+            set { Address = (Address)value; }
         }
 
-        EntityRef<ISupplier> IPerson.Supplier
+        ISupplier IPerson.Supplier
         {
-            get { return new EntityRef<ISupplier>(Supplier); }
-            set { Supplier = (Supplier)value.Entity; }
+            get { return Supplier; }
+            set { Supplier = (Supplier)value; }
         }
     }
 }

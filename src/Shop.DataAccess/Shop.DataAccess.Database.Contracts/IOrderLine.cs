@@ -15,8 +15,8 @@ namespace Shop.DataAccess.Database.Contracts
         int Count { get; set; }
         int UnitPrice { get; set; }
         int SupplierID { get; set; }
-        EntityRef<IOrder> Order { get; set; }
-        EntityRef<IProduct> Product { get; set; }
-        EntityRef<ISupplier> Supplier { get; set; }
+        IOrder Order { get; set; }
+        IProduct Product { get; set; }
+        ISupplier Supplier { get; set; }
     }
 }

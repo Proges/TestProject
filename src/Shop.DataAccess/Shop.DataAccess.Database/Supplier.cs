@@ -47,12 +47,13 @@ namespace Shop.DataAccess.Database
             }
         }      
 
-        EntityRef<IAddress> ISupplier.Address
+        IAddress ISupplier.Address
         {
-            get { return new EntityRef<IAddress>(Address); }
-            set { Address = (Address)value.Entity; }
+            get { return Address; }
+            set { Address = (Address)value; }
         }
 
+        #region ProductsSuppliers
         IList<IProductsSupplier> ISupplier.ProductsSuppliers
         {
             get { return ProductsSuppliers.ToList<IProductsSupplier>(); }
@@ -69,15 +70,11 @@ namespace Shop.DataAccess.Database
                 }
                 return _products;
             }
-            set
-            {
-                _products.Assign(value);
-            }
         }       
 
         private void OnAddProduct(IProduct product)
         {
-            if (product != null)
+            if (product != null && !Products.Select(p => p.ID).Contains(product.ID))
             {
                 ProductsSuppliers.Add(new ProductsSupplier { Supplier = this, Product = (Product)product });
             }
@@ -94,5 +91,6 @@ namespace Shop.DataAccess.Database
                 }
             }
         }
+        #endregion
     }
 }

@@ -10,22 +10,22 @@ namespace Shop.DataAccess.Database
 {
     public partial class OrderLine : IOrderLine
     {
-        EntityRef<IOrder> IOrderLine.Order
+        IOrder IOrderLine.Order
         {
-            get { return new EntityRef<IOrder>(Order); }
-            set { Order = (Order)value.Entity; }
+            get { return Order; }
+            set { Order = (Order)value; }
         }
 
-        EntityRef<IProduct> IOrderLine.Product
+        IProduct IOrderLine.Product
         {
-            get { return new EntityRef<IProduct>(Product); }
-            set { Product = (Product)value.Entity; }
+            get { return Product; }
+            set { Product = (Product)value; }
         }
 
-        EntityRef<ISupplier> IOrderLine.Supplier
+        ISupplier IOrderLine.Supplier
         {
-            get { return new EntityRef<ISupplier>(Supplier); }
-            set { Supplier = (Supplier)value.Entity; }
+            get { return Supplier; }
+            set { Supplier = (Supplier)value; }
         }
     }
 }

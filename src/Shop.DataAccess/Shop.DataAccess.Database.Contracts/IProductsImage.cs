@@ -11,7 +11,7 @@ namespace Shop.DataAccess.Database.Contracts
     {
         int ProductID { get; set; }
         int ImageID { get; set; }
-        EntityRef<IImage> Image { get; set; }
-        EntityRef<IProduct> Product { get; set; }
+        IImage Image { get; set; }
+        IProduct Product { get; set; }
     }
 }

@@ -29,22 +29,22 @@ namespace Shop.DataAccess.Database
                 Categories = new EntitySet<Category>();
                 Categories.AddRange(value.Cast<Category>());
             }
+        }       
+
+        ICategory ICategory.ParentCategory
+        {
+            get { return ParentCategory; }
+            set { ParentCategory = (Category)value; }
         }
 
+        #region ProductsCategories
         IList<IProductsCategory> ICategory.ProductsCategories
         {
             get
             {
                 return ProductsCategories.ToList<IProductsCategory>();
-            }           
+            }
         }
-
-        EntityRef<ICategory> ICategory.ParentCategory
-        {
-            get { return new EntityRef<ICategory>(ParentCategory); }
-            set { ParentCategory = (Category)value.Entity; }
-        }
-
 
         public EntitySet<IProduct> Products
         {
@@ -57,15 +57,11 @@ namespace Shop.DataAccess.Database
                 }
                 return _products;
             }
-            set
-            {
-                _products.Assign(value);
-            }
         }     
 
         private void OnAddProduct(IProduct product)
         {
-            if (product != null)
+            if (product != null && !Products.Select(p => p.ID).Contains(product.ID))
             {
                 ProductsCategories.Add(new ProductsCategory { Category = this, Product = (Product)product });
             }
@@ -83,5 +79,6 @@ namespace Shop.DataAccess.Database
                 }
             }
         }
+        #endregion
     }
 }

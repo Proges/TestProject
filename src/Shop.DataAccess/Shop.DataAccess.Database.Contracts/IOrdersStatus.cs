@@ -13,6 +13,6 @@ namespace Shop.DataAccess.Database.Contracts
         int OrderID { get; set; }
         int StatusID { get; set; }
         DateTime Date { get; set; }
-        EntityRef<IOrder> Order { get; set; }
+        IOrder Order { get; set; }
     }
 }

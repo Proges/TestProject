@@ -16,7 +16,7 @@ namespace Shop.DataAccess.Database.Contracts
         IList<IOrderLine> OrderLines { get; set; }
         IList<IPerson> Persons { get; set; }
         IList<IProductsSupplier> ProductsSuppliers { get; }
-        EntityRef<IAddress> Address { get; set; }
-        EntitySet<IProduct> Products { get; set; }
+        IAddress Address { get; set; }
+        EntitySet<IProduct> Products { get; }
     }
 }

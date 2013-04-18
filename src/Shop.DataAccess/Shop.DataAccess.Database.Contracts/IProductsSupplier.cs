@@ -11,7 +11,7 @@ namespace Shop.DataAccess.Database.Contracts
     {
         int ProductID { get; set; }
         int SupplierID { get; set; }
-        EntityRef<IProduct> Product { get; set; }
-        EntityRef<ISupplier> Supplier { get; set; }
+        IProduct Product { get; set; }
+        ISupplier Supplier { get; set; }
     }
 }

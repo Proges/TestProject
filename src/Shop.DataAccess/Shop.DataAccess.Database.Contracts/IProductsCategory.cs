@@ -10,9 +10,9 @@ namespace Shop.DataAccess.Database.Contracts
     public interface IProductsCategory
     {
         int ProductID { get; set; }
-        EntityRef<IProduct> Product { get; set; }
+        IProduct Product { get; set; }
 
         int CategoryID { get; set; }
-        EntityRef<ICategory> Category { get; set; }
+        ICategory Category { get; set; }
     }
 }

@@ -4,6 +4,9 @@ using Shop.DataAccess.Database.Contracts;
 using Shop.Infrastructure.Factory;
 using System.Data.Linq;
 using System.Linq;
+using Moq;
+using System.Data.Linq.Mapping;
+using Shop.DataAccess.Database.Tests.Properties;
 
 namespace Shop.DataAccess.Database.Tests
 {
@@ -32,83 +35,28 @@ namespace Shop.DataAccess.Database.Tests
         IStorageRecord storageRecord;
         ISupplier supplier;
         IUser user;
-
-        ShopTestDataContext context;
+        MappingSource mapping;
+   
 
         [TestInitialize]
         public void InitializeTests()
         {
-            context = new ShopTestDataContext();
+            mapping = new AttributeMappingSource();        
+        }  
 
-            ClearDatabase();
-
-            address = Factory.GetComponent<IAddress>();
-            banner = Factory.GetComponent<IBanner>();
-            bannerImage = Factory.GetComponent<IBannersImage>();
-            brand = Factory.GetComponent<IBrand>();
-            category = Factory.GetComponent<ICategory>();
-            city = Factory.GetComponent<ICity>();
-            feedback = Factory.GetComponent<IFeedback>();
-            image = Factory.GetComponent<IImage>();
-            legalPerson = Factory.GetComponent<ILegalPerson>();
-            log = Factory.GetComponent<ILog>();
-            order = Factory.GetComponent<IOrder>();
-            orderLine = Factory.GetComponent<IOrderLine>();
-            ordersStatus = Factory.GetComponent<IOrdersStatus>();
-            person = Factory.GetComponent<IPerson>();
-            product = Factory.GetComponent<IProduct>();
-            productsCategory = Factory.GetComponent<IProductsCategory>();
-            productsImage = Factory.GetComponent<IProductsImage>();
-            productsSupplier = Factory.GetComponent<IProductsSupplier>();
-            region = Factory.GetComponent<IRegion>();
-            storageRecord = Factory.GetComponent<IStorageRecord>();
-            supplier = Factory.GetComponent<ISupplier>();
-            user = Factory.GetComponent<IUser>();            
-        }
-
-        [TestCleanup]
-        public void CleanupTests()
-        {
-            ClearDatabase();
-        }
-
-
-        private void ClearDatabase()
-        {
-            context.Addresses.DeleteAllOnSubmit(context.Addresses);
-            context.Banners.DeleteAllOnSubmit(context.Banners);
-            context.BannersImages.DeleteAllOnSubmit(context.BannersImages);
-            context.Brands.DeleteAllOnSubmit(context.Brands);
-            context.Categories.DeleteAllOnSubmit(context.Categories);
-            context.Cities.DeleteAllOnSubmit(context.Cities);
-            context.Feedbacks.DeleteAllOnSubmit(context.Feedbacks);
-            context.Images.DeleteAllOnSubmit(context.Images);
-            context.LegalPersons.DeleteAllOnSubmit(context.LegalPersons);
-            context.Logs.DeleteAllOnSubmit(context.Logs);
-            context.OrderLines.DeleteAllOnSubmit(context.OrderLines);
-            context.Orders.DeleteAllOnSubmit(context.Orders);
-            context.OrdersStatus.DeleteAllOnSubmit(context.OrdersStatus);
-            context.Persons.DeleteAllOnSubmit(context.Persons);
-            context.Products.DeleteAllOnSubmit(context.Products);
-            context.ProductsCategories.DeleteAllOnSubmit(context.ProductsCategories);
-            context.ProductsImages.DeleteAllOnSubmit(context.ProductsImages);
-            context.ProductsSuppliers.DeleteAllOnSubmit(context.ProductsSuppliers);
-            context.Regions.DeleteAllOnSubmit(context.Regions);
-            context.StorageRecords.DeleteAllOnSubmit(context.StorageRecords);
-            context.Suppliers.DeleteAllOnSubmit(context.Suppliers);
-            context.Users.DeleteAllOnSubmit(context.Users);
-        }
+        /*
 
         [TestMethod]
         public void DatabaseTests_Address()
         {
-            //Initialize all necessary objects for address
-            region.Name = "TestRegion";            
-            city.Name = "TestCity";
-            city.Region = new EntityRef<IRegion>(region);
+            var mockAddress = new Mock<IAddress>();
 
-            //Initialize address
-            address.City = city;
+            IAddress address = new Address();
+
+            var table = new Mock<ITable<IAddress>>();
+            var mockContext = new Mock<DataContext>(Settings.Default.ShopTestConnectionString, mapping);
+                       
+            //Initialize address           
             address.House = "TestHouse";
             address.Street = "TestStreet";
             address.Building = "TestBuilding";
@@ -117,26 +65,23 @@ namespace Shop.DataAccess.Database.Tests
             address.IntercomeCode = "213";
             address.IsOffice = false;
             address.Porch = "TestPorch";
+
+
+            mockAddress.SetupGet(ma => ma.City).Returns(new City() { Name = "TestCity", Region = new Region() { Name = "TestRegion" } });
             
-            context.Addresses.InsertOnSubmit((Address)address);
-            context.SubmitChanges();
+            table.Setup(t => t.InsertOnSubmit(It.Is<Address>(a => a.City == null))).Throws(new Exception()).Verifiable(); 
+            mockContext.Setup(m => m.SubmitChanges(It.IsAny<ConflictMode>())).Verifiable();
 
-            //Checking for correct record in Addresses table
-            Assert.AreEqual("TestHouse", context.Addresses.First().House);
-            Assert.AreEqual("TestStreet", context.Addresses.First().Street);
-            Assert.AreEqual("TestBuilding", context.Addresses.First().Building);
-            Assert.AreEqual(4, context.Addresses.First().Floor);
-            Assert.AreEqual("TestHousing", context.Addresses.First().Housing);
-            Assert.AreEqual("213", context.Addresses.First().IntercomeCode);
-            Assert.AreEqual(false, context.Addresses.First().IsOffice);
-            Assert.AreEqual("TestPorch", context.Addresses.First().Porch);
+            address.City = mockAddress.Object.City;
 
-            context.Regions.DeleteOnSubmit((Region)region);
-            context.Cities.DeleteOnSubmit((City)city);
-            context.Addresses.DeleteOnSubmit((Address)address);
-            context.SubmitChanges();
+            table.Object.InsertOnSubmit((Address)address);           
+            mockContext.Object.SubmitChanges();
+
+            table.Verify(t => t.InsertOnSubmit((Address)address)); 
+            mockContext.Verify(mc => mc.SubmitChanges(It.IsAny<ConflictMode>()));
         }
 
+        
         [TestMethod]
         public void DatabaseTests_Banner()
         {
@@ -685,7 +630,7 @@ namespace Shop.DataAccess.Database.Tests
             product.Name = "TestProduct";
             product.Price = 1;
 
-            var newProduct = Factory.GetComponent<IProduct>();
+            var newProduct = Mock.Of<IProduct>();//Factory.GetComponent<IProduct>();
             newProduct.Brand= new EntityRef<IBrand>(brand);
             newProduct.Name="NewTestProduct";
             newProduct.Price = 2;
@@ -699,9 +644,9 @@ namespace Shop.DataAccess.Database.Tests
 
             supplier.Address = new EntityRef<IAddress>(address);
             supplier.Name = "TestSupplier";
-            
-            supplier.Products.Add((Product)product);
-            supplier.Products.Add((Product)newProduct);
+
+            supplier.Products.Add(product);
+            supplier.Products.Add(newProduct);
 
             context.Suppliers.InsertOnSubmit((Supplier)supplier);
             context.SubmitChanges();
@@ -925,6 +870,6 @@ namespace Shop.DataAccess.Database.Tests
             context.Orders.DeleteOnSubmit((Order)order);
             context.OrderLines.DeleteOnSubmit((OrderLine)orderLine);
             context.SubmitChanges();
-        }
+        }*/
     }
 }

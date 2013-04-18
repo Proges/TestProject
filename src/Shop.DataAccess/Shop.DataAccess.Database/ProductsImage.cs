@@ -10,16 +10,16 @@ namespace Shop.DataAccess.Database
 {
     public partial class ProductsImage : IProductsImage
     {
-        EntityRef<IImage> IProductsImage.Image
+        IImage IProductsImage.Image
         {
-            get { return new EntityRef<IImage>(Image); }
-            set { Image = (Image)value.Entity; }
+            get { return Image; }
+            set { Image = (Image)value; }
         }
 
-        EntityRef<IProduct> IProductsImage.Product
+        IProduct IProductsImage.Product
         {
-            get { return new EntityRef<IProduct>(Product); }
-            set { Product = (Product)value.Entity; }
+            get { return Product; }
+            set { Product = (Product)value; }
         }
     }
 }

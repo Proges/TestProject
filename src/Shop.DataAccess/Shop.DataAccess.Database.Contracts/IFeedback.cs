@@ -14,6 +14,6 @@ namespace Shop.DataAccess.Database.Contracts
         string Topic { get; set; }
         string Text { get; set; }
         DateTime Date { get; set; }
-        EntityRef<IUser> User { get; set; }
+        IUser User { get; set; }
     }
 }

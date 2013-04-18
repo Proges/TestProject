@@ -15,7 +15,7 @@ namespace Shop.DataAccess.Database.Contracts
         int? Debit { get; set; }
         int? Credit { get; set; }
         DateTime Date { get; set; }
-        EntityRef<IProduct> Product { get; set; }
-        EntityRef<IUser> User { get; set; }
+        IProduct Product { get; set; }
+        IUser User { get; set; }
     }
 }

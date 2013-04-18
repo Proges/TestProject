@@ -10,10 +10,10 @@ namespace Shop.DataAccess.Database
 {
     public partial class Feedback : IFeedback
     {
-        EntityRef<IUser> IFeedback.User
+        IUser IFeedback.User
         {
-            get { return new EntityRef<IUser>(User); }
-            set { User = (User)value.Entity; }
+            get { return User; }
+            set { User = (User)value; }
         }
     }
 }

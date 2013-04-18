@@ -27,7 +27,7 @@ namespace Shop.DataAccess.Database
         {
             get
             {
-                return Orders.Cast<IOrder>().ToList();
+                return Orders.ToList<IOrder>();
             }
             set
             {

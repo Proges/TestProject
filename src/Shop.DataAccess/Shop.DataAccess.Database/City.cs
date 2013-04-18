@@ -23,10 +23,10 @@ namespace Shop.DataAccess.Database
             }
         }
 
-        EntityRef<IRegion> ICity.Region
+        IRegion ICity.Region
         {
-            get { return new EntityRef<IRegion>(Region); }
-            set { Region = (Region)value.Entity; }
+            get { return Region; }
+            set { Region = (Region)value; }
         }
     }
 }

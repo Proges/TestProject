@@ -48,36 +48,20 @@ namespace Shop.DataAccess.Database
             }
         }
 
-        EntityRef<IBrand> IProduct.Brand
+        IBrand IProduct.Brand
         {
-            get { return new EntityRef<IBrand>(Brand); }
-            set { Brand = (Brand)value.Entity; }
-        }
-        
-        IList<IProductsSupplier> IProduct.ProductsSuppliers
-        {
-            get
-            {
-                return ProductsSuppliers.ToList<IProductsSupplier>();
-            }            
+            get { return Brand; }
+            set { Brand = (Brand)value; }
         }
 
-        IList<IProductsCategory> IProduct.ProductsCategories
-        {
-            get
-            {
-                return ProductsCategories.ToList<IProductsCategory>();
-            }            
-        }
-
+        #region ProductsImages
         IList<IProductsImage> IProduct.ProductsImages
         {
             get
             {
                 return ProductsImages.ToList<IProductsImage>();
-            }            
+            }
         }
-
 
         public EntitySet<IImage> Images
         {
@@ -90,47 +74,11 @@ namespace Shop.DataAccess.Database
                 }
                 return _images;
             }
-            set
-            {
-                _images.Assign(value);
-            }
         }
-        public EntitySet<ICategory> Categories 
-        {
-            get
-            {
-                if (_categories == null)
-                {
-                    _categories = new EntitySet<ICategory>(OnAddCategories, OnRemoveCategories);
-                    _categories.SetSource(ProductsCategories.Select(pi => pi.Category));
-                }
-                return _categories;
-            }
-            set
-            {
-                _categories.Assign(value);
-            }
-        }
-        public EntitySet<ISupplier> Suppliers 
-        {
-            get
-            {
-                if (_suppliers == null)
-                {
-                    _suppliers = new EntitySet<ISupplier>(OnAddSupplier, OnRemoveSupplier);
-                    _suppliers.SetSource(ProductsSuppliers.Select(pi => pi.Supplier));
-                }
-                return _suppliers;
-            }
-            set
-            {
-                _suppliers.Assign(value);
-            } 
-        }      
 
         private void OnAddImage(IImage image)
         {
-            if (image != null)
+            if (image != null && !Images.Select(i => i.ID).Contains(image.ID))
             {
                 ProductsImages.Add(new ProductsImage { Product = this, Image = (Image)image });
             }
@@ -147,11 +95,35 @@ namespace Shop.DataAccess.Database
                     ProductsImages.Remove(rImage);
                 }
             }
-        } 
+        }
+        #endregion
+
+        #region ProductsCategories
+
+        IList<IProductsCategory> IProduct.ProductsCategories
+        {
+            get
+            {
+                return ProductsCategories.ToList<IProductsCategory>();
+            }
+        }
+
+        public EntitySet<ICategory> Categories
+        {
+            get
+            {
+                if (_categories == null)
+                {
+                    _categories = new EntitySet<ICategory>(OnAddCategories, OnRemoveCategories);
+                    _categories.SetSource(ProductsCategories.Select(pi => pi.Category));
+                }
+                return _categories;
+            }
+        }
 
         private void OnAddCategories(ICategory category)
         {
-            if (category != null)
+            if (category != null && !Categories.Select(c => c.ID).Contains(category.ID))
             {
                 ProductsCategories.Add(new ProductsCategory { Product = this, Category = (Category)category });
             }
@@ -169,10 +141,34 @@ namespace Shop.DataAccess.Database
                 }
             }
         }
+        #endregion
+
+        #region ProductsSuppliers
+
+        IList<IProductsSupplier> IProduct.ProductsSuppliers
+        {
+            get
+            {
+                return ProductsSuppliers.ToList<IProductsSupplier>();
+            }
+        }
+
+        public EntitySet<ISupplier> Suppliers
+        {
+            get
+            {
+                if (_suppliers == null)
+                {
+                    _suppliers = new EntitySet<ISupplier>(OnAddSupplier, OnRemoveSupplier);
+                    _suppliers.SetSource(ProductsSuppliers.Select(pi => pi.Supplier));
+                }
+                return _suppliers;
+            }
+        }
 
         private void OnAddSupplier(ISupplier supplier)
         {
-            if (supplier != null)
+            if (supplier != null && !Suppliers.Select(s=>s.ID).Contains(supplier.ID))
             {
                 ProductsSuppliers.Add(new ProductsSupplier { Product = this, Supplier = (Supplier)supplier });
             }
@@ -189,6 +185,7 @@ namespace Shop.DataAccess.Database
                     ProductsSuppliers.Remove(rSupplier);
                 }
             }
-        }       
+        }
+        #endregion
     }
 }

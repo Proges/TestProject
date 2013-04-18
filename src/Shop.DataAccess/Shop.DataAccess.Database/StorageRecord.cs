@@ -10,16 +10,16 @@ namespace Shop.DataAccess.Database
 {
     public partial class StorageRecord : IStorageRecord
     {
-        EntityRef<IProduct> IStorageRecord.Product
+        IProduct IStorageRecord.Product
         {
-            get { return new EntityRef<IProduct>(Product); }
-            set { Product = (Product)value.Entity; }
+            get { return Product; }
+            set { Product = (Product)value; }
         }
 
-        EntityRef<IUser> IStorageRecord.User
+        IUser IStorageRecord.User
         {
-            get { return new EntityRef<IUser>(User); }
-            set { User = (User)value.Entity; }
+            get { return User; }
+            set { User = (User)value; }
         }
     }
 }

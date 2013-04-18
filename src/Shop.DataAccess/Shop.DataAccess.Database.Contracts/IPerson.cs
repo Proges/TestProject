@@ -20,7 +20,7 @@ namespace Shop.DataAccess.Database.Contracts
         int? SupplierID{ get; set; }
         IList<IUser> Users{ get; set; }
         IList<ILegalPerson> LegalPersons{ get; set; }
-        EntityRef<IAddress> Address{ get; set; }
-        EntityRef<ISupplier> Supplier { get; set; }
+        IAddress Address{ get; set; }
+        ISupplier Supplier { get; set; }
     }
 }

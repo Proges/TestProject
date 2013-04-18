@@ -10,10 +10,10 @@ namespace Shop.DataAccess.Database
 {
     public partial class ProductsCategory : IProductsCategory
     {
-        EntityRef<IProduct> IProductsCategory.Product
+        IProduct IProductsCategory.Product
         {
-            get { return new EntityRef<IProduct>(Product); }
-            set { Product = (Product)value.Entity; }
+            get { return Product; }
+            set { Product = (Product)value; }
         }
 
         int IProductsCategory.CategoryID
@@ -21,10 +21,10 @@ namespace Shop.DataAccess.Database
             get { return CategoryID; }
             set { CategoryID = value; }
         }
-        EntityRef<ICategory> IProductsCategory.Category
+        ICategory IProductsCategory.Category
         {
-            get { return new EntityRef<ICategory>(Category); }
-            set { Category = (Category)value.Entity; }
+            get { return Category; }
+            set { Category = (Category)value; }
         }
     }
 }

@@ -20,13 +20,7 @@ namespace Shop.DataAccess.Database
             _products = new EntitySet<IProduct>(OnAddProduct, OnRemoveProduct);
         }
 
-        IList<IBannersImage> IImage.BannersImages
-        {
-            get
-            {
-                return BannersImages.ToList<IBannersImage>();
-            }           
-        }
+      
 
         IList<IBrand> IImage.Brands
         {
@@ -41,14 +35,14 @@ namespace Shop.DataAccess.Database
             }
         }
 
-        IList<IProductsImage> IImage.ProductsImages
+        #region BannersImages
+        IList<IBannersImage> IImage.BannersImages
         {
             get
             {
-                return ProductsImages.ToList<IProductsImage>();
-            }            
+                return BannersImages.ToList<IBannersImage>();
+            }
         }
-
 
         public EntitySet<IBanner> Banners
         {
@@ -61,9 +55,32 @@ namespace Shop.DataAccess.Database
                 }
                 return _banners;
             }
-            set
+        }
+
+        private void OnAddBanner(IBanner banner)
+        {
+            if (banner != null && !Banners.Select(b => b.ID).Contains(banner.ID))
             {
-                _banners.Assign(value);
+                BannersImages.Add(new BannersImage { Image = this, Banner = (Banner)banner });
+            }
+        }
+
+        private void OnRemoveBanner(IBanner banner)
+        {
+            if (banner != null)
+            {
+                var rBanner = BannersImages.FirstOrDefault(bannersImages => bannersImages.BannerID == banner.ID);
+                BannersImages.Remove(rBanner);
+            }
+        }
+        #endregion
+
+        #region ProductsImages
+        IList<IProductsImage> IImage.ProductsImages
+        {
+            get
+            {
+                return ProductsImages.ToList<IProductsImage>();
             }
         }
 
@@ -78,32 +95,11 @@ namespace Shop.DataAccess.Database
                 }
                 return _products;
             }
-            set
-            {
-                _products.Assign(value);
-            }
         }
-
-        private void OnAddBanner(IBanner banner)
-        {
-            if (banner != null)
-            {
-                BannersImages.Add(new BannersImage { Image = this, Banner = (Banner)banner });
-            }
-        }
-
-        private void OnRemoveBanner(IBanner banner)
-        {
-            if (banner != null)
-            {
-                var rBanner = BannersImages.FirstOrDefault(bannersImages => bannersImages.BannerID == banner.ID);
-                BannersImages.Remove(rBanner);
-            }
-        }        
 
         private void OnAddProduct(IProduct product)
         {
-            if (product != null && !Products.Contains(product))
+            if (product != null && !Products.Select(p => p.ID).Contains(product.ID))
             {
                 ProductsImages.Add(new ProductsImage { Image = this, Product = (Product)product });
             }
@@ -117,5 +113,6 @@ namespace Shop.DataAccess.Database
                 ProductsImages.Remove(rProduct);
             }
         }
+        #endregion       
     }
 }

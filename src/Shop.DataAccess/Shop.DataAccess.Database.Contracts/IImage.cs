@@ -15,6 +15,6 @@ namespace Shop.DataAccess.Database.Contracts
         IList<IBannersImage> BannersImages { get; }
         IList<IBrand> Brands { get; set; }
         IList<IProductsImage> ProductsImages { get; }
-        EntitySet<IBanner> Banners { get; set; }
+        EntitySet<IBanner> Banners { get; }
     }
 }

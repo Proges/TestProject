@@ -23,6 +23,8 @@ namespace Shop.DataAccess.Database
             get { return Supplier; }
             set { Supplier = (Supplier)value; }
         }
+        
+        #region BannersImages
 
         IList<IBannersImage> IBanner.BannersImages
         {
@@ -43,17 +45,11 @@ namespace Shop.DataAccess.Database
                 }
                 return _images;
             }
-
-            set
-            {
-                _images.Assign(value);
-            }
-        }
-              
+        }              
 
         private void OnAddImage(IImage image)
         {
-            if (image != null)
+            if (image != null && !Images.Select(i => i.ID).Contains(image.ID))
             {
                 BannersImages.Add(new BannersImage { Banner = this, Image = (Image)image });
             }
@@ -70,5 +66,6 @@ namespace Shop.DataAccess.Database
                 }
             }
         }
+        #endregion
     }
 }

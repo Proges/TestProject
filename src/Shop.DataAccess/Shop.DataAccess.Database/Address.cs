@@ -12,7 +12,7 @@ namespace Shop.DataAccess.Database
     {
         IList<IOrder> IAddress.Orders
         {
-            get { return Orders.Cast<IOrder>().ToList(); }
+            get { return Orders.ToList<IOrder>(); }
             set
             {
                 Orders = new EntitySet<Order>();

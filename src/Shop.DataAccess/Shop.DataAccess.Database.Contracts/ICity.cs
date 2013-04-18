@@ -13,6 +13,6 @@ namespace Shop.DataAccess.Database.Contracts
         string Name { get; set; }
         int RegionID { get; set; }
         IList<IAddress> Addresses { get; set; }
-        EntityRef<IRegion> Region { get; set; }
+        IRegion Region { get; set; }
     }
 }

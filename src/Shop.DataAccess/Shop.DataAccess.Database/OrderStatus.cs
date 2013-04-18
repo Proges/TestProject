@@ -10,10 +10,10 @@ namespace Shop.DataAccess.Database
 {
     public partial class OrdersStatus : IOrdersStatus
     {
-        EntityRef<IOrder> IOrdersStatus.Order
+        IOrder IOrdersStatus.Order
         {
-            get { return new EntityRef<IOrder>(); }
-            set { Order = (Order)value.Entity; }
+            get { return Order; }
+            set { Order = (Order)value; }
         }
     }
 }

@@ -10,10 +10,10 @@ namespace Shop.DataAccess.Database
 {
     public partial class LegalPerson : ILegalPerson
     {
-        EntityRef<IPerson> ILegalPerson.Person
+        IPerson ILegalPerson.Person
         {
-            get { return new EntityRef<IPerson>(Person); }
-            set { Person = (Person)value.Entity; }
+            get { return Person; }
+            set { Person = (Person)value; }
         }
     }
 }

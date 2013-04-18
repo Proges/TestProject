@@ -21,6 +21,6 @@ namespace Shop.DataAccess.Database.Contracts
         int? Account { get; set; }
         string CorespondentAccount { get; set; }
         string BIC { get; set; }
-        EntityRef<IPerson> Person { get; set; }
+        IPerson Person { get; set; }
     }
 }

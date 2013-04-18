@@ -20,7 +20,7 @@ namespace Shop.DataAccess.Database.Contracts
         int PayTypeID { get; set; }
         IList<IOrderLine> OrderLines { get; set; }
         IList<IOrdersStatus> OrdersStatus { get; set; }
-        EntityRef<IAddress> Address { get; set; }
-        EntityRef<IUser> User { get; set; }
+        IAddress Address { get; set; }
+        IUser User { get; set; }
     }
 }

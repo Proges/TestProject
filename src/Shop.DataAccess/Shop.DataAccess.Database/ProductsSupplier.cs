@@ -10,16 +10,16 @@ namespace Shop.DataAccess.Database
 {
     public partial class ProductsSupplier : IProductsSupplier
     {
-        EntityRef<IProduct> IProductsSupplier.Product
+        IProduct IProductsSupplier.Product
         {
-            get { return new EntityRef<IProduct>(Product); }
-            set { Product = (Product)value.Entity; }
+            get { return Product; }
+            set { Product = (Product)value; }
         }
 
-        EntityRef<ISupplier> IProductsSupplier.Supplier
+        ISupplier IProductsSupplier.Supplier
         {
-            get { return new EntityRef<ISupplier>(Supplier); }
-            set { Supplier = (Supplier)value.Entity; }
+            get { return Supplier; }
+            set { Supplier = (Supplier)value; }
         }
     }
 }
