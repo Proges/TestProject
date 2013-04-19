@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Image : IImage
+    public partial class Image : IImage, IEntity<IImage>
     {
         private EntitySet<IBanner> _banners;
         private EntitySet<IProduct> _products;
@@ -20,7 +20,8 @@ namespace Shop.DataAccess.Database
             _products = new EntitySet<IProduct>(OnAddProduct, OnRemoveProduct);
         }
 
-      
+
+        public int Identifier { get; set; }
 
         IList<IBrand> IImage.Brands
         {

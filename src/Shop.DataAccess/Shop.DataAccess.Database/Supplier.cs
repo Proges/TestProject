@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Supplier : ISupplier
+    public partial class Supplier : ISupplier, IEntity<ISupplier>
     {
+        public int Identifier { get; set; }
+
         private EntitySet<IProduct> _products;
 
         partial void OnCreated()

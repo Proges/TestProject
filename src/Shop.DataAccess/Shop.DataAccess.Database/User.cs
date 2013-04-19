@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class User : IUser
+    public partial class User : IUser , IEntity<IUser>
     {
+        public int Identifier { get; set; }
+
         IList<IFeedback> IUser.Feedbacks
         {
             get
@@ -53,6 +55,6 @@ namespace Shop.DataAccess.Database
         {
             get { return Person; }
             set { Person = (Person)value; }
-        }
+        }        
     }
 }

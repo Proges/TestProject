@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Address : IAddress
+    public partial class Address : IAddress, IEntity<IAddress>
     {
+        public int Identifier { get; set; }
+
         IList<IOrder> IAddress.Orders
         {
             get { return Orders.ToList<IOrder>(); }

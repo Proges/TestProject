@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class LegalPerson : ILegalPerson
+    public partial class LegalPerson : ILegalPerson, IEntity<ILegalPerson>
     {
+        public int Identifier { get; set; }
+
         IPerson ILegalPerson.Person
         {
             get { return Person; }
