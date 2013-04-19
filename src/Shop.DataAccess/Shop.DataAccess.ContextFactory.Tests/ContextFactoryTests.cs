@@ -17,34 +17,38 @@ namespace Shop.DataAccess.ContextFactory.Tests
         [TestMethod]
         public void ContextFactoryTests_Commit()
         {
-            var contextFactory = new Mock<IContextFactory>();
+            var submit = false;
+            MappingSource mapping = new AttributeMappingSource();
+            var context = new Mock<DataContext>(ConfigurationManager.ConnectionStrings["ShopTestConnectionString"].ConnectionString, mapping);
 
-            contextFactory.Setup(con => con.Commit()).Verifiable();
+            context.Setup(con => con.SubmitChanges(It.IsAny<ConflictMode>())).Callback(() => submit = true).Verifiable();
 
-            contextFactory.Object.Commit();
-            contextFactory.Verify(con => con.Commit());
+            context.Object.SubmitChanges();
+            context.Verify(con => con.SubmitChanges(It.IsAny<ConflictMode>()));
+            Assert.IsTrue(submit);
         }
 
         [TestMethod]
         public void ContextFactoryTests_Rollback()
         {
-            var contextFactory = new Mock<IContextFactory>();
+            MappingSource mapping = new AttributeMappingSource();
+            var context = new Mock<DataContext>(ConfigurationManager.ConnectionStrings["ShopTestConnectionString"].ConnectionString, mapping);
 
-            contextFactory.Setup(con => con.Rollback()).Callback(() => contextFactory = null);
-
-            contextFactory.Object.Rollback();
-            Assert.AreEqual(null, contextFactory);
+            context = null;                   
+            Assert.IsNull(context);
         }
 
         [TestMethod]
         public void ContextFactory_GetContext()
         {
-            var contextFactory = new Mock<IContextFactory>();
             MappingSource mapping = new AttributeMappingSource();
+            var context = new Mock<DataContext>(ConfigurationManager.ConnectionStrings["ShopTestConnectionString"].ConnectionString, mapping);
 
-            contextFactory.Setup(con => con.GetContext()).Returns(new DataContext(ConfigurationManager.ConnectionStrings["ShopTestConnectionString"].ConnectionString, mapping));
+            if (context == null)
+            {
+                context = new Mock<DataContext>(ConfigurationManager.ConnectionStrings["ShopTestConnectionString"].ConnectionString, mapping);
+            }           
 
-            var context = contextFactory.Object.GetContext();
             Assert.IsNotNull(context);
         }
     }
