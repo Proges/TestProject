@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Region : IRegion, IEntity<IRegion>
+    public partial class Region : IRegion, IEntity<Region>
     {
         public int Identifier { get; set; }
 

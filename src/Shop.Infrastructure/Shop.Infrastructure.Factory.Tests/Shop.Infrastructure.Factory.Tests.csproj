@@ -59,6 +59,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Data.Contracts\ITestService.cs" />
+    <Compile Include="Data\TestService.cs" />
     <Compile Include="FactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data.Contracts\ITestComponent.cs" />

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class User : IUser , IEntity<IUser>
+    public partial class User : IUser , IEntity<User>
     {
         public int Identifier { get; set; }
 
@@ -55,6 +55,6 @@ namespace Shop.DataAccess.Database
         {
             get { return Person; }
             set { Person = (Person)value; }
-        }        
+        }       
     }
 }

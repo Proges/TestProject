@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Category : ICategory, IEntity<ICategory>
+    public partial class Category : ICategory, IEntity<Category>
     {
         private EntitySet<IProduct> _products;
 

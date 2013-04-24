@@ -39,10 +39,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IOrderRepository.cs" />
+    <Compile Include="IProductRepository.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="IStorageRecordRepository.cs" />
+    <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\Shop.DataAccess\Shop.DataAccess.Database.Contracts\Shop.DataAccess.Database.Contracts.csproj">
+      <Project>{6b120486-3415-42f3-857b-c8a00f54cee4}</Project>
+      <Name>Shop.DataAccess.Database.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.DataAccess\Shop.DataAccess.Database\Shop.DataAccess.Database.csproj">
+      <Project>{3cca17e9-10a8-43c9-9e1e-3693938be90b}</Project>
+      <Name>Shop.DataAccess.Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -32,5 +32,25 @@ namespace Shop.DataAccess.Database.Properties {
                 return ((string)(this["ShopDevConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(local);Initial Catalog=ShopTest;Integrated Security=True")]
+        public string ShopTestConnectionString {
+            get {
+                return ((string)(this["ShopTestConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(local);Initial Catalog=ShopDev;Integrated Security=True")]
+        public string ShopDevConnectionString1 {
+            get {
+                return ((string)(this["ShopDevConnectionString1"]));
+            }
+        }
     }
 }

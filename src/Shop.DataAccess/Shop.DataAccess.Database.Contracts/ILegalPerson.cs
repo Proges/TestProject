@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface ILegalPerson
+    public interface ILegalPerson : IEntity<ILegalPerson>
     {
         int ID { get; set; }
         int PersonID { get; set; }

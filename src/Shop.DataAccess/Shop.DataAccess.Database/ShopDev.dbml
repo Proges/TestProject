@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ShopDev" Class="ShopDevDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=CAESAR;Initial Catalog=ShopDev;Integrated Security=True" SettingsObjectName="Shop.DataAccess.Database.Properties.Settings" SettingsPropertyName="ShopDevConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(local);Initial Catalog=ShopDev;Integrated Security=True" SettingsObjectName="Shop.DataAccess.Database.Properties.Settings" SettingsPropertyName="ShopDevConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Addresses" Member="Addresses">
     <Type Name="Address">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -225,18 +225,6 @@
       <Association Name="Region_City" Member="Cities" ThisKey="ID" OtherKey="RegionID" Type="City" />
     </Type>
   </Table>
-  <Table Name="dbo.StorageRecords" Member="StorageRecords">
-    <Type Name="StorageRecord">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ProductID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Debit" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Credit" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="Product_StorageRecord" Member="Product" ThisKey="ProductID" OtherKey="ID" Type="Product" IsForeignKey="true" />
-      <Association Name="User_StorageRecord" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Suppliers" Member="Suppliers">
     <Type Name="Supplier">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -246,7 +234,22 @@
       <Association Name="Supplier_OrderLine" Member="OrderLines" ThisKey="ID" OtherKey="SupplierID" Type="OrderLine" />
       <Association Name="Supplier_Person" Member="Persons" ThisKey="ID" OtherKey="SupplierID" Type="Person" />
       <Association Name="Supplier_ProductsSupplier" Member="ProductsSuppliers" ThisKey="ID" OtherKey="SupplierID" Type="ProductsSupplier" />
+      <Association Name="Supplier_StorageRecord" Member="StorageRecords" ThisKey="ID" OtherKey="SupplierID" Type="StorageRecord" />
       <Association Name="Address_Supplier" Member="Address" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StorageRecords" Member="StorageRecords">
+    <Type Name="StorageRecord">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProductID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SupplierID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Debit" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Credit" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Product_StorageRecord" Member="Product" ThisKey="ProductID" OtherKey="ID" Type="Product" IsForeignKey="true" />
+      <Association Name="User_StorageRecord" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" />
+      <Association Name="Supplier_StorageRecord" Member="Supplier" ThisKey="SupplierID" OtherKey="ID" Type="Supplier" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

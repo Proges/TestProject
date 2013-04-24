@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Enumerators
 {
-    enum OrderStatus
+    public enum OrderStatus
     {
         Start = 1, 
         Running = 2, 

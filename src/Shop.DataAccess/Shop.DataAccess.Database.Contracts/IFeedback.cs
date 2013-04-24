@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IFeedback
+    public interface IFeedback : IEntity<IFeedback>
     {
         int ID { get; set; }
         int UserID { get; set; }

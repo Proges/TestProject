@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class OrdersStatus : IOrdersStatus, IEntity<IOrdersStatus>
+    public partial class OrdersStatus : IOrdersStatus, IEntity<OrdersStatus>
     {
         public int Identifier { get; set; }
 

@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,10 +40,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddressBusiness.cs" />
+    <Compile Include="BannerBusiness.cs" />
+    <Compile Include="BrandBusiness.cs" />
+    <Compile Include="CategoryBusiness.cs" />
+    <Compile Include="CityBusiness.cs" />
+    <Compile Include="FeedbackBusiness.cs" />
+    <Compile Include="ImageBusiness.cs" />
+    <Compile Include="LegalPersonBusiness.cs" />
+    <Compile Include="LogBusiness.cs" />
+    <Compile Include="OrderBusiness.cs" />
+    <Compile Include="OrderLineBusiness.cs" />
+    <Compile Include="OrderStatusBusiness.cs" />
+    <Compile Include="PersonBusiness.cs" />
+    <Compile Include="ProductBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionBusiness.cs" />
+    <Compile Include="StorageRecordBusiness.cs" />
+    <Compile Include="SupplierBusiness.cs" />
+    <Compile Include="UserBusiness.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\Shop.DataAccess\Shop.DataAccess.Database.Contracts\Shop.DataAccess.Database.Contracts.csproj">
+      <Project>{6b120486-3415-42f3-857b-c8a00f54cee4}</Project>
+      <Name>Shop.DataAccess.Database.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.DataAccess\Shop.DataAccess.Database\Shop.DataAccess.Database.csproj">
+      <Project>{3cca17e9-10a8-43c9-9e1e-3693938be90b}</Project>
+      <Name>Shop.DataAccess.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Infrastructure\Shop.Infrastructure.Logger.Contracts\Shop.Infrastructure.Logger.Contracts.csproj">
+      <Project>{bd9502a8-c3b4-4612-8c02-612e963ec0e9}</Project>
+      <Name>Shop.Infrastructure.Logger.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Infrastructure\Shop.Infrastructure.Logger\Shop.Infrastructure.Logger.csproj">
+      <Project>{d30dbeec-5108-4d09-94e6-583c137bd12f}</Project>
+      <Name>Shop.Infrastructure.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.Business.Data.Contracts\Shop.Business.Data.Contracts.csproj">
+      <Project>{a282b555-24b4-4b5b-846a-bd371fc521fd}</Project>
+      <Name>Shop.Business.Data.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Brand : IBrand, IEntity<IBrand>
+    public partial class Brand : IBrand, IEntity<Brand>
     {
         public int Identifier { get; set; }
 

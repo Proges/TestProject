@@ -14,7 +14,9 @@ namespace Shop.Infrastructure.Factory
     {
         static IUnityContainer _objectContainer;
         static IUnityContainer _repositoryContainer;
+        static IUnityContainer _serviceContainer;
         static IUnityContainer _managerContainer;
+        
 
         static Factory()
         {
@@ -22,6 +24,7 @@ namespace Shop.Infrastructure.Factory
 
             _objectContainer = new UnityContainer();
             _repositoryContainer = new UnityContainer();
+            _serviceContainer = new UnityContainer();
             _managerContainer = new UnityContainer();
 
 
@@ -29,6 +32,7 @@ namespace Shop.Infrastructure.Factory
             {
                 ContainerElement objectElement = section.Containers["objects"];
                 ContainerElement repositoryElement = section.Containers["repositories"];
+                ContainerElement serviceElement = section.Containers["services"];
                 ContainerElement managerElement = section.Containers["managers"];
 
                 if (objectElement != null) 
@@ -39,10 +43,14 @@ namespace Shop.Infrastructure.Factory
                 {
                     repositoryElement.Configure(_repositoryContainer);
                 }
+                if (serviceElement != null)
+                {
+                    serviceElement.Configure(_serviceContainer);
+                }
                 if (managerElement != null)
                 {
                     managerElement.Configure(_managerContainer);
-                }
+                }               
             }
         }
 
@@ -55,10 +63,13 @@ namespace Shop.Infrastructure.Factory
         {
             return _repositoryContainer.Resolve<T>();
         }
-
+        public static T GetService<T>()
+        {
+            return _serviceContainer.Resolve<T>();
+        }
         public static T GetManager<T>()
         {
             return _managerContainer.Resolve<T>();
-        }
+        }        
     }    
 }

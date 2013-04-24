@@ -53,7 +53,6 @@
     <None Include="logger.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shop.Infrastructure.Logger.Contracts\Shop.Infrastructure.Logger.Contracts.csproj">

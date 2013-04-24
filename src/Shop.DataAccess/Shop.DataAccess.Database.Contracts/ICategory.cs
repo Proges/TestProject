@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface ICategory
+    public interface ICategory : IEntity<ICategory>
     {
         int ID { get; set; }
         int? ParentCategoryID { get; set; }

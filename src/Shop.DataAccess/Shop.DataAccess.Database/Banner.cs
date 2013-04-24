@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Banner : IBanner, IEntity<IBanner>
+    public partial class Banner : IBanner, IEntity<Banner>
     {
         private EntitySet<IImage> _images;
 

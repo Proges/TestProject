@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IImage
+    public interface IImage : IEntity<IImage>
     {
         int ID { get; set; }
         string Name { get; set; }

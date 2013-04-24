@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class LegalPerson : ILegalPerson, IEntity<ILegalPerson>
+    public partial class LegalPerson : ILegalPerson, IEntity<LegalPerson>
     {
         public int Identifier { get; set; }
 

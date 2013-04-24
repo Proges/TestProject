@@ -51,13 +51,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="unity.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Shop.Infrastructure.Logger.Contracts\Shop.Infrastructure.Logger.Contracts.csproj">
       <Project>{bd9502a8-c3b4-4612-8c02-612e963ec0e9}</Project>
       <Name>Shop.Infrastructure.Logger.Contracts</Name>
@@ -66,6 +59,11 @@
       <Project>{d30dbeec-5108-4d09-94e6-583c137bd12f}</Project>
       <Name>Shop.Infrastructure.Logger</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="unity.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

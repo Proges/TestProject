@@ -34,5 +34,12 @@ namespace Shop.Infrastructure.Factory.Tests
             var testManager = Factory.GetManager<ITestManager>();
             Assert.AreNotEqual("AnotherTestManager", testManager.Name);
         }
+
+        [TestMethod]
+        public void FactoryTests_GetService()
+        {
+            var testService = Factory.GetService<ITestService>();
+            Assert.AreEqual("TestService", testService.Name);
+        }
     }
 }

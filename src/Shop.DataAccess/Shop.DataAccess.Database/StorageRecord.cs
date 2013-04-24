@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class StorageRecord : IStorageRecord, IEntity<IStorageRecord>
+    public partial class StorageRecord : IStorageRecord, IEntity<StorageRecord>
     {
         public int Identifier { get; set; }
 
@@ -22,6 +22,13 @@ namespace Shop.DataAccess.Database
         {
             get { return User; }
             set { User = (User)value; }
+        }
+
+
+        ISupplier IStorageRecord.Supplier
+        {
+            get { return Supplier; }
+            set { Supplier = (Supplier)value; }
         }
     }
 }

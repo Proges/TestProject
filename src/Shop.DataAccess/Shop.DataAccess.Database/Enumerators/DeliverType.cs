@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Enumerators
 {
-    enum DeliverType
+    public enum DeliverType
     {
         Pickup = 1,
         ByСourier = 2

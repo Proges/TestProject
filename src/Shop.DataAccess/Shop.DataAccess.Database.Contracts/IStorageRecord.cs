@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IStorageRecord
+    public interface IStorageRecord : IEntity<IStorageRecord>
     {
         int ID { get; set; }
         int ProductID { get; set; }
@@ -17,5 +17,6 @@ namespace Shop.DataAccess.Database.Contracts
         DateTime Date { get; set; }
         IProduct Product { get; set; }
         IUser User { get; set; }
+        ISupplier Supplier { get; set; }
     }
 }

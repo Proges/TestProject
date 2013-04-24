@@ -3,10 +3,13 @@ CREATE TABLE [dbo].[StorageRecords]
 [ID] [int] NOT NULL IDENTITY(1, 1),
 [ProductID] [int] NOT NULL,
 [UserID] [int] NOT NULL,
+[SupplierID] [int] NULL,
 [Debit] [int] NULL,
 [Credit] [int] NULL,
 [Date] [datetime] NOT NULL
 )
+ALTER TABLE [dbo].[StorageRecords] ADD
+CONSTRAINT [FK_StorageRecords_Suppliers] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Suppliers] ([ID])
 GO
 ALTER TABLE [dbo].[StorageRecords] ADD CONSTRAINT [PK_Storage] PRIMARY KEY CLUSTERED  ([ID])
 GO

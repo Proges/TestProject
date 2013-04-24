@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface ILog
+    public interface ILog : IEntity<ILog>
     {
         int ID { get; set; }
         DateTime Date { get; set; }

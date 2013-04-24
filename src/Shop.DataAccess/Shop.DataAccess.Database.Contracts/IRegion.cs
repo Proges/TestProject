@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IRegion
+    public interface IRegion : IEntity<IRegion>
     {
         int ID { get; set; }
         string Name { get; set; }

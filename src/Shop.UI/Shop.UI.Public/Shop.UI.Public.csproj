@@ -57,6 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -213,6 +214,46 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shop.Business\Shop.Business.Data.Contracts\Shop.Business.Data.Contracts.csproj">
+      <Project>{a282b555-24b4-4b5b-846a-bd371fc521fd}</Project>
+      <Name>Shop.Business.Data.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Business\Shop.Business.Data\Shop.Business.Data.csproj">
+      <Project>{05db2b27-e6fe-418a-bb49-e629b5923e00}</Project>
+      <Name>Shop.Business.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Business\Shop.Business.Repository.Contracts\Shop.Business.Repository.Contracts.csproj">
+      <Project>{41dc8d51-3a04-43f9-85d8-1beea5013e1e}</Project>
+      <Name>Shop.Business.Repository.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Business\Shop.Business.Repository\Shop.Business.Repository.csproj">
+      <Project>{2732bc94-2ac3-4326-b2e9-c6f4507b77b6}</Project>
+      <Name>Shop.Business.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Business\Shop.Business.Service.Contracts\Shop.Business.Service.Contracts.csproj">
+      <Project>{d4b09a91-4b8b-4ad0-96c3-c16d4a29da6f}</Project>
+      <Name>Shop.Business.Service.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Business\Shop.Business.Service\Shop.Business.Service.csproj">
+      <Project>{ef4975c0-36bd-42f4-92c0-fa47e9d12804}</Project>
+      <Name>Shop.Business.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.DataAccess\Shop.DataAccess.ContextFactory.Contracts\Shop.DataAccess.ContextFactory.Contracts.csproj">
+      <Project>{afa90005-3493-4c1a-b23f-4dd5893df9db}</Project>
+      <Name>Shop.DataAccess.ContextFactory.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.DataAccess\Shop.DataAccess.ContextFactory\Shop.DataAccess.ContextFactory.csproj">
+      <Project>{41b16f5b-d506-4332-8e0c-ccf1e3f26494}</Project>
+      <Name>Shop.DataAccess.ContextFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.DataAccess\Shop.DataAccess.Database.Contracts\Shop.DataAccess.Database.Contracts.csproj">
+      <Project>{6b120486-3415-42f3-857b-c8a00f54cee4}</Project>
+      <Name>Shop.DataAccess.Database.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.DataAccess\Shop.DataAccess.Database\Shop.DataAccess.Database.csproj">
+      <Project>{3cca17e9-10a8-43c9-9e1e-3693938be90b}</Project>
+      <Name>Shop.DataAccess.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Shop.Infrastructure\Shop.Infrastructure.Factory.Tests\Shop.Infrastructure.Factory.Tests.csproj">
       <Project>{486de3f3-bd3e-454d-84be-d4175d32e4f8}</Project>
       <Name>Shop.Infrastructure.Factory.Tests</Name>
@@ -228,6 +269,14 @@
     <ProjectReference Include="..\..\Shop.Infrastructure\Shop.Infrastructure.Logger\Shop.Infrastructure.Logger.csproj">
       <Project>{d30dbeec-5108-4d09-94e6-583c137bd12f}</Project>
       <Name>Shop.Infrastructure.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Service\Shop.Service.Manager.Contracts\Shop.Service.Manager.Contracts.csproj">
+      <Project>{fb7f8e7e-2483-4031-8c1c-121bf5ae4a1d}</Project>
+      <Name>Shop.Service.Manager.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Service\Shop.Service.Manager\Shop.Service.Manager.csproj">
+      <Project>{1491e300-466d-4a4a-9efd-617a9514d525}</Project>
+      <Name>Shop.Service.Manager</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

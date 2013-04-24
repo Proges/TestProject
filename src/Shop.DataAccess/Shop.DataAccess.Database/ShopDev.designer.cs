@@ -90,16 +90,16 @@ namespace Shop.DataAccess.Database
     partial void InsertRegion(Region instance);
     partial void UpdateRegion(Region instance);
     partial void DeleteRegion(Region instance);
-    partial void InsertStorageRecord(StorageRecord instance);
-    partial void UpdateStorageRecord(StorageRecord instance);
-    partial void DeleteStorageRecord(StorageRecord instance);
     partial void InsertSupplier(Supplier instance);
     partial void UpdateSupplier(Supplier instance);
     partial void DeleteSupplier(Supplier instance);
+    partial void InsertStorageRecord(StorageRecord instance);
+    partial void UpdateStorageRecord(StorageRecord instance);
+    partial void DeleteStorageRecord(StorageRecord instance);
     #endregion
 		
 		public ShopDevDataContext() : 
-				base(global::Shop.DataAccess.Database.Properties.Settings.Default.ShopDevConnectionString, mappingSource)
+				base(global::Shop.DataAccess.Database.Properties.Settings.Default.ShopDevConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -288,19 +288,19 @@ namespace Shop.DataAccess.Database
 			}
 		}
 		
-		public System.Data.Linq.Table<StorageRecord> StorageRecords
-		{
-			get
-			{
-				return this.GetTable<StorageRecord>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Supplier> Suppliers
 		{
 			get
 			{
 				return this.GetTable<Supplier>();
+			}
+		}
+		
+		public System.Data.Linq.Table<StorageRecord> StorageRecords
+		{
+			get
+			{
+				return this.GetTable<StorageRecord>();
 			}
 		}
 	}
@@ -5066,6 +5066,297 @@ namespace Shop.DataAccess.Database
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Suppliers")]
+	public partial class Supplier : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Name;
+		
+		private int _AddressID;
+		
+		private EntitySet<Banner> _Banners;
+		
+		private EntitySet<OrderLine> _OrderLines;
+		
+		private EntitySet<Person> _Persons;
+		
+		private EntitySet<ProductsSupplier> _ProductsSuppliers;
+		
+		private EntitySet<StorageRecord> _StorageRecords;
+		
+		private EntityRef<Address> _Address;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnAddressIDChanging(int value);
+    partial void OnAddressIDChanged();
+    #endregion
+		
+		public Supplier()
+		{
+			this._Banners = new EntitySet<Banner>(new Action<Banner>(this.attach_Banners), new Action<Banner>(this.detach_Banners));
+			this._OrderLines = new EntitySet<OrderLine>(new Action<OrderLine>(this.attach_OrderLines), new Action<OrderLine>(this.detach_OrderLines));
+			this._Persons = new EntitySet<Person>(new Action<Person>(this.attach_Persons), new Action<Person>(this.detach_Persons));
+			this._ProductsSuppliers = new EntitySet<ProductsSupplier>(new Action<ProductsSupplier>(this.attach_ProductsSuppliers), new Action<ProductsSupplier>(this.detach_ProductsSuppliers));
+			this._StorageRecords = new EntitySet<StorageRecord>(new Action<StorageRecord>(this.attach_StorageRecords), new Action<StorageRecord>(this.detach_StorageRecords));
+			this._Address = default(EntityRef<Address>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressID", DbType="Int NOT NULL")]
+		public int AddressID
+		{
+			get
+			{
+				return this._AddressID;
+			}
+			set
+			{
+				if ((this._AddressID != value))
+				{
+					if (this._Address.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAddressIDChanging(value);
+					this.SendPropertyChanging();
+					this._AddressID = value;
+					this.SendPropertyChanged("AddressID");
+					this.OnAddressIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_Banner", Storage="_Banners", ThisKey="ID", OtherKey="SupplierID")]
+		public EntitySet<Banner> Banners
+		{
+			get
+			{
+				return this._Banners;
+			}
+			set
+			{
+				this._Banners.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_OrderLine", Storage="_OrderLines", ThisKey="ID", OtherKey="SupplierID")]
+		public EntitySet<OrderLine> OrderLines
+		{
+			get
+			{
+				return this._OrderLines;
+			}
+			set
+			{
+				this._OrderLines.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_Person", Storage="_Persons", ThisKey="ID", OtherKey="SupplierID")]
+		public EntitySet<Person> Persons
+		{
+			get
+			{
+				return this._Persons;
+			}
+			set
+			{
+				this._Persons.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_ProductsSupplier", Storage="_ProductsSuppliers", ThisKey="ID", OtherKey="SupplierID")]
+		public EntitySet<ProductsSupplier> ProductsSuppliers
+		{
+			get
+			{
+				return this._ProductsSuppliers;
+			}
+			set
+			{
+				this._ProductsSuppliers.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_StorageRecord", Storage="_StorageRecords", ThisKey="ID", OtherKey="SupplierID")]
+		public EntitySet<StorageRecord> StorageRecords
+		{
+			get
+			{
+				return this._StorageRecords;
+			}
+			set
+			{
+				this._StorageRecords.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Supplier", Storage="_Address", ThisKey="AddressID", OtherKey="ID", IsForeignKey=true)]
+		public Address Address
+		{
+			get
+			{
+				return this._Address.Entity;
+			}
+			set
+			{
+				Address previousValue = this._Address.Entity;
+				if (((previousValue != value) 
+							|| (this._Address.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Address.Entity = null;
+						previousValue.Suppliers.Remove(this);
+					}
+					this._Address.Entity = value;
+					if ((value != null))
+					{
+						value.Suppliers.Add(this);
+						this._AddressID = value.ID;
+					}
+					else
+					{
+						this._AddressID = default(int);
+					}
+					this.SendPropertyChanged("Address");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Banners(Banner entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = this;
+		}
+		
+		private void detach_Banners(Banner entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = null;
+		}
+		
+		private void attach_OrderLines(OrderLine entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = this;
+		}
+		
+		private void detach_OrderLines(OrderLine entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = null;
+		}
+		
+		private void attach_Persons(Person entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = this;
+		}
+		
+		private void detach_Persons(Person entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = null;
+		}
+		
+		private void attach_ProductsSuppliers(ProductsSupplier entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = this;
+		}
+		
+		private void detach_ProductsSuppliers(ProductsSupplier entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = null;
+		}
+		
+		private void attach_StorageRecords(StorageRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = this;
+		}
+		
+		private void detach_StorageRecords(StorageRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Supplier = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.StorageRecords")]
 	public partial class StorageRecord : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5078,6 +5369,8 @@ namespace Shop.DataAccess.Database
 		
 		private int _UserID;
 		
+		private System.Nullable<int> _SupplierID;
+		
 		private System.Nullable<int> _Debit;
 		
 		private System.Nullable<int> _Credit;
@@ -5087,6 +5380,8 @@ namespace Shop.DataAccess.Database
 		private EntityRef<Product> _Product;
 		
 		private EntityRef<User> _User;
+		
+		private EntityRef<Supplier> _Supplier;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5098,6 +5393,8 @@ namespace Shop.DataAccess.Database
     partial void OnProductIDChanged();
     partial void OnUserIDChanging(int value);
     partial void OnUserIDChanged();
+    partial void OnSupplierIDChanging(System.Nullable<int> value);
+    partial void OnSupplierIDChanged();
     partial void OnDebitChanging(System.Nullable<int> value);
     partial void OnDebitChanged();
     partial void OnCreditChanging(System.Nullable<int> value);
@@ -5110,6 +5407,7 @@ namespace Shop.DataAccess.Database
 		{
 			this._Product = default(EntityRef<Product>);
 			this._User = default(EntityRef<User>);
+			this._Supplier = default(EntityRef<Supplier>);
 			OnCreated();
 		}
 		
@@ -5177,6 +5475,30 @@ namespace Shop.DataAccess.Database
 					this._UserID = value;
 					this.SendPropertyChanged("UserID");
 					this.OnUserIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SupplierID", DbType="Int")]
+		public System.Nullable<int> SupplierID
+		{
+			get
+			{
+				return this._SupplierID;
+			}
+			set
+			{
+				if ((this._SupplierID != value))
+				{
+					if (this._Supplier.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSupplierIDChanging(value);
+					this.SendPropertyChanging();
+					this._SupplierID = value;
+					this.SendPropertyChanged("SupplierID");
+					this.OnSupplierIDChanged();
 				}
 			}
 		}
@@ -5309,217 +5631,36 @@ namespace Shop.DataAccess.Database
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Suppliers")]
-	public partial class Supplier : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private string _Name;
-		
-		private int _AddressID;
-		
-		private EntitySet<Banner> _Banners;
-		
-		private EntitySet<OrderLine> _OrderLines;
-		
-		private EntitySet<Person> _Persons;
-		
-		private EntitySet<ProductsSupplier> _ProductsSuppliers;
-		
-		private EntityRef<Address> _Address;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnAddressIDChanging(int value);
-    partial void OnAddressIDChanged();
-    #endregion
-		
-		public Supplier()
-		{
-			this._Banners = new EntitySet<Banner>(new Action<Banner>(this.attach_Banners), new Action<Banner>(this.detach_Banners));
-			this._OrderLines = new EntitySet<OrderLine>(new Action<OrderLine>(this.attach_OrderLines), new Action<OrderLine>(this.detach_OrderLines));
-			this._Persons = new EntitySet<Person>(new Action<Person>(this.attach_Persons), new Action<Person>(this.detach_Persons));
-			this._ProductsSuppliers = new EntitySet<ProductsSupplier>(new Action<ProductsSupplier>(this.attach_ProductsSuppliers), new Action<ProductsSupplier>(this.detach_ProductsSuppliers));
-			this._Address = default(EntityRef<Address>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_StorageRecord", Storage="_Supplier", ThisKey="SupplierID", OtherKey="ID", IsForeignKey=true)]
+		public Supplier Supplier
 		{
 			get
 			{
-				return this._ID;
+				return this._Supplier.Entity;
 			}
 			set
 			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressID", DbType="Int NOT NULL")]
-		public int AddressID
-		{
-			get
-			{
-				return this._AddressID;
-			}
-			set
-			{
-				if ((this._AddressID != value))
-				{
-					if (this._Address.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAddressIDChanging(value);
-					this.SendPropertyChanging();
-					this._AddressID = value;
-					this.SendPropertyChanged("AddressID");
-					this.OnAddressIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_Banner", Storage="_Banners", ThisKey="ID", OtherKey="SupplierID")]
-		public EntitySet<Banner> Banners
-		{
-			get
-			{
-				return this._Banners;
-			}
-			set
-			{
-				this._Banners.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_OrderLine", Storage="_OrderLines", ThisKey="ID", OtherKey="SupplierID")]
-		public EntitySet<OrderLine> OrderLines
-		{
-			get
-			{
-				return this._OrderLines;
-			}
-			set
-			{
-				this._OrderLines.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_Person", Storage="_Persons", ThisKey="ID", OtherKey="SupplierID")]
-		public EntitySet<Person> Persons
-		{
-			get
-			{
-				return this._Persons;
-			}
-			set
-			{
-				this._Persons.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Supplier_ProductsSupplier", Storage="_ProductsSuppliers", ThisKey="ID", OtherKey="SupplierID")]
-		public EntitySet<ProductsSupplier> ProductsSuppliers
-		{
-			get
-			{
-				return this._ProductsSuppliers;
-			}
-			set
-			{
-				this._ProductsSuppliers.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Supplier", Storage="_Address", ThisKey="AddressID", OtherKey="ID", IsForeignKey=true)]
-		public Address Address
-		{
-			get
-			{
-				return this._Address.Entity;
-			}
-			set
-			{
-				Address previousValue = this._Address.Entity;
+				Supplier previousValue = this._Supplier.Entity;
 				if (((previousValue != value) 
-							|| (this._Address.HasLoadedOrAssignedValue == false)))
+							|| (this._Supplier.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Address.Entity = null;
-						previousValue.Suppliers.Remove(this);
+						this._Supplier.Entity = null;
+						previousValue.StorageRecords.Remove(this);
 					}
-					this._Address.Entity = value;
+					this._Supplier.Entity = value;
 					if ((value != null))
 					{
-						value.Suppliers.Add(this);
-						this._AddressID = value.ID;
+						value.StorageRecords.Add(this);
+						this._SupplierID = value.ID;
 					}
 					else
 					{
-						this._AddressID = default(int);
+						this._SupplierID = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Address");
+					this.SendPropertyChanged("Supplier");
 				}
 			}
 		}
@@ -5542,54 +5683,6 @@ namespace Shop.DataAccess.Database
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Banners(Banner entity)
-		{
-			this.SendPropertyChanging();
-			entity.Supplier = this;
-		}
-		
-		private void detach_Banners(Banner entity)
-		{
-			this.SendPropertyChanging();
-			entity.Supplier = null;
-		}
-		
-		private void attach_OrderLines(OrderLine entity)
-		{
-			this.SendPropertyChanging();
-			entity.Supplier = this;
-		}
-		
-		private void detach_OrderLines(OrderLine entity)
-		{
-			this.SendPropertyChanging();
-			entity.Supplier = null;
-		}
-		
-		private void attach_Persons(Person entity)
-		{
-			this.SendPropertyChanging();
-			entity.Supplier = this;
-		}
-		
-		private void detach_Persons(Person entity)
-		{
-			this.SendPropertyChanging();
-			entity.Supplier = null;
-		}
-		
-		private void attach_ProductsSuppliers(ProductsSupplier entity)
-		{
-			this.SendPropertyChanging();
-			entity.Supplier = this;
-		}
-		
-		private void detach_ProductsSuppliers(ProductsSupplier entity)
-		{
-			this.SendPropertyChanging();
-			entity.Supplier = null;
 		}
 	}
 }

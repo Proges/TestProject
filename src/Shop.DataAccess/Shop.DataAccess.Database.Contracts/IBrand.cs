@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IBrand
+    public interface IBrand : IEntity<IBrand>
     {
         int ID { get; set; }
         string Name { get; set; }

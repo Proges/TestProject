@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Log : ILog, IEntity<ILog>
+    public partial class Log : ILog, IEntity<Log>
     {
         public int Identifier { get; set; }
     }

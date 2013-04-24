@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Enumerators
 {
-    enum UserRole
+    public enum UserRole
     {
         Admin = 1,
-        Customer = 2
+        Customer = 2,
+        Guest = 3
     }
 }

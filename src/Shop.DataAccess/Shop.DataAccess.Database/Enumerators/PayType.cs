@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Enumerators
 {
-    enum PayType
+    public enum PayType
     {
         Cash = 1,
         NonCash = 2

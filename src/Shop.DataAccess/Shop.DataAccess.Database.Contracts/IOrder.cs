@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IOrder
+    public interface IOrder : IEntity<IOrder>
     {
         int ID { get; set; }
         int UserID { get; set; }
