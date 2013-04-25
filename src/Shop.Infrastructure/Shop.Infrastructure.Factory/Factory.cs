@@ -27,13 +27,13 @@ namespace Shop.Infrastructure.Factory
             _serviceContainer = new UnityContainer();
             _managerContainer = new UnityContainer();
 
-
             if (section != null)
             {
                 ContainerElement objectElement = section.Containers["objects"];
                 ContainerElement repositoryElement = section.Containers["repositories"];
                 ContainerElement serviceElement = section.Containers["services"];
                 ContainerElement managerElement = section.Containers["managers"];
+                                
 
                 if (objectElement != null) 
                 {
@@ -63,10 +63,12 @@ namespace Shop.Infrastructure.Factory
         {
             return _repositoryContainer.Resolve<T>();
         }
+
         public static T GetService<T>()
         {
             return _serviceContainer.Resolve<T>();
         }
+
         public static T GetManager<T>()
         {
             return _managerContainer.Resolve<T>();

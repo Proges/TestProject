@@ -9,9 +9,7 @@ namespace Shop.Business.Service.Contracts
 {
     public interface IOrderService
     {
-        bool AddToCart(IOrderBusiness order, int productID, int count);
-        void RemoveFromCart(IOrderBusiness order, int productID, int count);
-        IList<IOrderLineBusiness> GetCart(IOrderBusiness order);
-        void MakeOrder(IOrderBusiness order);
+        void MakeOrder(IOrderBusiness order, ICart cart);
+        void AbortOrder(IOrderBusiness order);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Shop.DataAccess.Database;
+﻿using Shop.Business.Data.Contracts;
+using Shop.DataAccess.Database;
 using Shop.DataAccess.Database.Contracts;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Shop.Business.Repository.Contracts
 {
-    public interface IProductRepository : IRepository<Product>
+    public interface IProductRepository : IRepository<IProductBusiness>
     {
+        IList<IProductBusiness> SearchProducts(string search);
     }
 }

@@ -1,4 +1,6 @@
-﻿using Shop.Business.Repository.Contracts;
+﻿using Shop.Business.Data;
+using Shop.Business.Data.Contracts;
+using Shop.Business.Repository.Contracts;
 using Shop.DataAccess.Database;
 using Shop.DataAccess.Database.Contracts;
 using System;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Business.Repository
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository : Repository<IUserBusiness>, IUserRepository
     {
 
     }

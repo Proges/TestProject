@@ -30,86 +30,81 @@ namespace Shop.Business.Service
             _productRepository = productRepository ?? Factory.GetRepository<IProductRepository>();
             _orderRepository = orderRepository ?? Factory.GetRepository<IOrderRepository>();
             _storageRecordRepository = storageRecordRepository ?? Factory.GetRepository<IStorageRecordRepository>();
-        }
-
-        public bool AddToCart(IOrderBusiness order, int productID, int count)
+        }        
+        
+        public void MakeOrder(IOrderBusiness order, ICart cart)
         {
-            var product = _productRepository.GetByID(productID);
-            var orderLine = Factory.GetComponent<IOrderLineBusiness>();
-
-            var productCount = _storageRecordRepository.GetAll()
-                            .Where(record => record.ProductID == productID)
-                            .GroupBy(record => record.SupplierID)
-                            .Select(grp => new {SupplierID = grp.Key, Count = grp.Sum(record=>record.Credit) - grp.Sum(record=>record.Debit)}).ToList();
-
-            if (productCount.Sum(c => c.Count) < count)
+            if (order == null)
             {
-                return false;
+                return;
             }
 
-            foreach (var supplier in productCount)
+            foreach (var cartProduct in cart.GetCart())
             {
-                var storageRecord = Factory.GetComponent<IStorageRecordBusiness>();
-                storageRecord.Product = product;
-                storageRecord.Date = DateTime.Now;
-                storageRecord.User = order.User;
-                storageRecord.Supplier = product.Suppliers.First(s => s.ID == supplier.SupplierID);
+                var count = cartProduct.Value;
+                var product = _productRepository.GetByID(cartProduct.Key);
+                var orderLine = Factory.GetComponent<IOrderLineBusiness>();
 
-                orderLine.Product = product;
-                orderLine.Count = count;
-                orderLine.Supplier = storageRecord.Supplier;
-                orderLine.UnitPrice = product.Price;
+                var productSuppliers = _storageRecordRepository.GetAll()
+                                .Where(record => record.ProductID == cartProduct.Key)
+                                .GroupBy(record => record.Supplier.ID)
+                                .Select(grp => new { SupplierID = grp.Key, Count = grp.Sum(record => record.Credit) - grp.Sum(record => record.Debit) }).ToList();
 
-                if (supplier.Count >= count)
+
+
+                foreach (var supplier in productSuppliers)
                 {
+                    var storageRecord = Factory.GetComponent<IStorageRecordBusiness>();
+                    storageRecord.Product = product;
+                    storageRecord.Date = DateTime.Now;
+                    storageRecord.User = order.User;
+                    storageRecord.Supplier = product.Suppliers.First(s => s.ID == supplier.SupplierID);
+
+                    orderLine.Product = product;
+                    orderLine.Count = count;
+                    orderLine.Supplier = storageRecord.Supplier;
+                    orderLine.UnitPrice = product.Price;
+
+                    if (supplier.Count >= count)
+                    {
+                        storageRecord.Debit = count;
+                        order.OrderLines.Add(orderLine);
+                        _storageRecordRepository.Save((StorageRecordBusiness)storageRecord);
+                        break;
+                    }
+
+                    count -= (int)supplier.Count;
                     storageRecord.Debit = count;
                     order.OrderLines.Add(orderLine);
-                    _storageRecordRepository.Save((StorageRecord)storageRecord);
-                    break;
+                    _storageRecordRepository.Save((StorageRecordBusiness)storageRecord);
                 }
-
-                count -= (int)supplier.Count;
-                storageRecord.Debit = count;
-                order.OrderLines.Add(orderLine);
-                _storageRecordRepository.Save((StorageRecord)storageRecord);
             }
 
-            return true;               
+            _orderRepository.Save(order);
         }
 
-        public void RemoveFromCart(IOrderBusiness order, int productID, int count)
+
+        public void AbortOrder(IOrderBusiness order)
         {
-            var product = _productRepository.GetByID(productID);
-            var currOrderLines = order.OrderLines.Where(orderline => orderline.ProductID == productID);
+            if (order == null)
+            {
+                return;
+            }
+
+            _orderRepository.Delete(order);
+           
+            var currOrderLines = order.OrderLines.Where(orderline => orderline.OrderID == order.ID);
 
             foreach (var orderLine in currOrderLines)
             {
                 var storageRecord = Factory.GetComponent<IStorageRecordBusiness>();
-                storageRecord.Product = product;
+                storageRecord.Product = orderLine.Product;
                 storageRecord.Date = DateTime.Now;
                 storageRecord.User = order.User;
-                storageRecord.Supplier = product.Suppliers.First(s => s.ID == orderLine.SupplierID);
-                _storageRecordRepository.Save((StorageRecord)storageRecord);
-
-                if (orderLine.Count - count <= 0)
-                {
-                    count -= orderLine.Count;
-                    order.OrderLines.Remove(orderLine);
-                    continue;
-                }
-                orderLine.Count -= count;
-                break;
+                storageRecord.Supplier = orderLine.Supplier;
+                storageRecord.Debit = orderLine.Count;
+                _storageRecordRepository.Save((StorageRecordBusiness)storageRecord);               
             }
-        }
-
-        public IList<IOrderLineBusiness> GetCart(IOrderBusiness order)
-        {
-            return order.OrderLines.Cast<IOrderLineBusiness>().ToList();
-        }
-        
-        public void MakeOrder(IOrderBusiness order)
-        {
-            _orderRepository.Save((Order)order);
-        }
+        }        
     }
 }

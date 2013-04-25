@@ -42,6 +42,7 @@
     <Compile Include="IAddressBusiness.cs" />
     <Compile Include="IBannerBusiness.cs" />
     <Compile Include="IBrandBusiness.cs" />
+    <Compile Include="ICart.cs" />
     <Compile Include="ICategoryBusiness.cs" />
     <Compile Include="ICityBusiness.cs" />
     <Compile Include="IFeedbackBusiness.cs" />

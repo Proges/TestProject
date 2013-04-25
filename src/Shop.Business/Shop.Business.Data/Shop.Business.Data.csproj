@@ -43,6 +43,7 @@
     <Compile Include="AddressBusiness.cs" />
     <Compile Include="BannerBusiness.cs" />
     <Compile Include="BrandBusiness.cs" />
+    <Compile Include="Cart.cs" />
     <Compile Include="CategoryBusiness.cs" />
     <Compile Include="CityBusiness.cs" />
     <Compile Include="FeedbackBusiness.cs" />
@@ -68,6 +69,10 @@
     <ProjectReference Include="..\..\Shop.DataAccess\Shop.DataAccess.Database\Shop.DataAccess.Database.csproj">
       <Project>{3cca17e9-10a8-43c9-9e1e-3693938be90b}</Project>
       <Name>Shop.DataAccess.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shop.Infrastructure\Shop.Infrastructure.Factory\Shop.Infrastructure.Factory.csproj">
+      <Project>{7e7aadf3-14a9-4e66-9f57-77856bcb1d26}</Project>
+      <Name>Shop.Infrastructure.Factory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Shop.Infrastructure\Shop.Infrastructure.Logger.Contracts\Shop.Infrastructure.Logger.Contracts.csproj">
       <Project>{bd9502a8-c3b4-4612-8c02-612e963ec0e9}</Project>

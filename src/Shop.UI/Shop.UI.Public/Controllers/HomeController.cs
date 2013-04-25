@@ -1,8 +1,11 @@
 ﻿using log4net;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using Shop.Business.Data;
 using Shop.Business.Repository;
 using Shop.Business.Repository.Contracts;
+using Shop.DataAccess.ContextFactory.Contracts;
+using Shop.DataAccess.Database;
 using Shop.DataAccess.Database.Contracts;
 using Shop.Infrastructure.Factory;
 using Shop.Infrastructure.Logger;
@@ -26,7 +29,7 @@ namespace Shop.UI.Public.Controllers
 
         public ActionResult Index()
         {
-           return View();
+            return View();
         }
     }
 }

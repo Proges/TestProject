@@ -12,6 +12,9 @@ using Shop.DataAccess.Database;
 using System.Data.Linq;
 using System.Net.Mail;
 using System.Net;
+using Shop.Business.Data;
+using Shop.DataAccess.Database.Enumerators;
+using System.Text.RegularExpressions;
 
 namespace Shop.Business.Service
 {
@@ -38,34 +41,46 @@ namespace Shop.Business.Service
 
         public IUserBusiness LogOut(IUserBusiness user)
         {
-            user = null;
+            user.Login = "";
+            user.Password = "";
+            user.Person = null;
+            user.RegistrationDate = new DateTime(1900, 12, 12);
+
             user.RoleID = (int)UserRole.Guest;
             return user;
         }
 
         public IUserBusiness Registration(IUserBusiness user)
         {
-            _userRepository.Save((User)user);
+            if (user != null && user.RoleID == (int)UserRole.Guest && user.Login.Count() > 6 && user.Password.Count() > 8)
+            {
+                var person = user.Person;
+                var emailPattern = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
+
+                if (person != null && person.Address != null && Regex.IsMatch(person.Email, emailPattern) &&
+                    !string.IsNullOrWhiteSpace(person.Name) && !string.IsNullOrWhiteSpace(person.SecondName))
+                {
+                    var address = person.Address;
+
+
+                    if (address.City != null && !string.IsNullOrWhiteSpace(address.House) && !string.IsNullOrWhiteSpace(address.Street))
+                    {
+                        _userRepository.Save((UserBusiness)user);
+                    }
+                }
+            }
             return user;
         }
 
         public void SendPassword(string email)
         {
-            NetworkCredential nc = new NetworkCredential("testshopemail@gmail.com", "ppppppppp1");
-            MailMessage mail = new MailMessage();
-            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            var emailService = Factory.GetComponent<IEmailService>();
 
-            SmtpServer.Port = 587;
-            SmtpServer.UseDefaultCredentials = false;
-            SmtpServer.Credentials = nc;
-            SmtpServer.EnableSsl = true;
-            mail.From = new MailAddress("testshopemail@gmail.com");
-            mail.To.Add(email);
+            string title = "Shop password recovery";
+            string body = "Your password: " + _userRepository.GetAll().FirstOrDefault(user => user.Person.Email == email).Password;
+            string userEmail = "testshopemail@gmail.com";
 
-            mail.Subject = "Shop password recovery";
-            mail.Body = "Your password: "+_userRepository.GetAll().FirstOrDefault(user => user.Person.Email == email).Password;
-
-            SmtpServer.Send(mail);
+            emailService.SendEmail(userEmail, title, body);           
         }
     }
 }

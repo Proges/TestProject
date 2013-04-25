@@ -1,4 +1,5 @@
-﻿using Shop.DataAccess.Database;
+﻿using Shop.Business.Data.Contracts;
+using Shop.DataAccess.Database;
 using Shop.DataAccess.Database.Contracts;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Business.Repository.Contracts
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<IUserBusiness>
     {
 
     }

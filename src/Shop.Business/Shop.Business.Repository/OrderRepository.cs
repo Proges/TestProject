@@ -1,4 +1,5 @@
-﻿using Shop.Business.Repository.Contracts;
+﻿using Shop.Business.Data.Contracts;
+using Shop.Business.Repository.Contracts;
 using Shop.DataAccess.Database;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Business.Repository
 {
-     public class OrderRepository : Repository<Order>, IOrderRepository
+     public class OrderRepository : Repository<IOrderBusiness>, IOrderRepository
     {
     }
 }

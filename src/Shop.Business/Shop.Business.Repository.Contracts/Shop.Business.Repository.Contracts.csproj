@@ -55,6 +55,10 @@
       <Project>{3cca17e9-10a8-43c9-9e1e-3693938be90b}</Project>
       <Name>Shop.DataAccess.Database</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Shop.Business.Data.Contracts\Shop.Business.Data.Contracts.csproj">
+      <Project>{a282b555-24b4-4b5b-846a-bd371fc521fd}</Project>
+      <Name>Shop.Business.Data.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

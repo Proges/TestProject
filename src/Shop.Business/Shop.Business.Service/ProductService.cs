@@ -25,18 +25,6 @@ namespace Shop.Business.Service
         public ProductService(IProductRepository productRepository)
         {
             _productRepository = productRepository ?? Factory.GetRepository<IProductRepository>();
-        }
-
-        public IList<IProductBusiness> SearchProducts(string search)
-        {
-            var productsList = _productRepository
-                                     .GetAll()
-                                     .Where(products => search.Contains(products.Brand.Name) || search.Contains(products.Name) ||
-                                         search.Intersect(products.Categories.Select(c=>c.Name).ToString()).ToList() != null
-                                         )
-                                     .Cast<IProductBusiness>()
-                                     .ToList();           
-           return productsList;
-        }
+        }        
     }
 }
