@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Shop.Business.Repository
 {
     public class Repository<T> : IRepository<T> 
-        where T: IEntity<int>
+        where T: class, IEntity<int>
     {
         private DataContext _context;
 
@@ -37,7 +37,7 @@ namespace Shop.Business.Repository
         public T Save(T entity)
         {
             var table = _context.GetTable(ResolveType());
-
+           
             if (table.GetOriginalEntityState(entity) == null)
             {
                 table.InsertOnSubmit(entity);
@@ -56,7 +56,8 @@ namespace Shop.Business.Repository
 
         private Type ResolveType()
         {
-            return Factory.GetComponent<T>().GetType().BaseType;            
+            var type = Factory.GetComponent<T>().GetType().BaseType;
+            return type;
         }
     }
 }

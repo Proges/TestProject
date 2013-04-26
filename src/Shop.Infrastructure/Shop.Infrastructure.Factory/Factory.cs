@@ -71,6 +71,6 @@ namespace Shop.Infrastructure.Factory
         public static T GetManager<T>()
         {
             return _managerContainer.Resolve<T>();
-        }        
+        }
     }    
 }

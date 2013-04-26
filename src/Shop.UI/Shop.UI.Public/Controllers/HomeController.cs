@@ -30,8 +30,6 @@ namespace Shop.UI.Public.Controllers
       
         public ActionResult Index()
         {
-            var z = Factory.GetRepository<IUserRepository>();
-            z.GetByID(1);
             return View();
         }
     }
