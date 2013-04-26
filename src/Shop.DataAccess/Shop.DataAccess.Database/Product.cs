@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Product : IProduct, IEntity<Product>
+    public partial class Product : EntityBase, IProduct
     {
         private EntitySet<IImage> _images;
         private EntitySet<ICategory> _categories;
         private EntitySet<ISupplier> _suppliers;
+
+        public int Identifier { get { return ID; } }
 
         partial void OnCreated()
         {
@@ -20,8 +22,7 @@ namespace Shop.DataAccess.Database
             _suppliers = new EntitySet<ISupplier>(OnAddSupplier, OnRemoveSupplier);
             _categories = new EntitySet<ICategory>(OnAddCategories, OnRemoveCategories);
         }
-
-        public int Identifier { get; set; }
+               
 
         IList<IOrderLine> IProduct.OrderLines
         {

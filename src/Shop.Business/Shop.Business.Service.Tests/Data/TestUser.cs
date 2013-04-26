@@ -12,5 +12,7 @@ namespace Shop.Business.Service.Tests.Data
         public string Login { get; set; }
         public string Password { get; set; }
         public int UserRoleID { get; set; }
+        public TestPerson Person { get; set; }
+        public DateTime RegistrationDate { get; set; }
     }
 }

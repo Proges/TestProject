@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IBanner : IEntity<IBanner>
+    public interface IBanner : IEntityBase, IEntity<int>
     {
         int ID { get; set; }
         string Name { get; set; }

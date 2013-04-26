@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Feedback : IFeedback, IEntity<Feedback>
+    public partial class Feedback : EntityBase, IFeedback
     {
-        public int Identifier { get; set; }
+        public int Identifier { get { return ID; } }
 
         IUser IFeedback.User
         {

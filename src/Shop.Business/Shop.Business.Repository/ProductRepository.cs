@@ -13,16 +13,11 @@ namespace Shop.Business.Repository
 {
     public class ProductRepository : Repository<IProductBusiness>, IProductRepository
     {        
-        public IList<IProductBusiness> SearchProducts(string search)
+        public IQueryable<IProductBusiness> SearchProducts(string search)
         {
-            var context = _contextFactory.GetContext();
-            var type = Factory.GetComponent<IProductBusiness>().GetType().BaseType;
-            var table = (IQueryable<IProductBusiness>)(context.GetTable(type).Cast<IProductBusiness>());
-
-            var productsList = table.Where(products => search.Contains(products.Brand.Name) || search.Contains(products.Name) ||
+            var productsList = GetAll().Where(products => search.Contains(products.Brand.Name) || search.Contains(products.Name) ||
                                          search.Intersect(products.Categories.Select(c => c.Name).ToString()).ToList() != null)
-                                     .Cast<IProductBusiness>()
-                                     .ToList();
+                                     .Cast<IProductBusiness>();
             return productsList;
         }
     }

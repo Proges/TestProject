@@ -39,20 +39,16 @@ namespace Shop.Business.Service
             return (IUserBusiness)user;
         }
 
-        public IUserBusiness LogOut(IUserBusiness user)
+        public IUserBusiness LogOut()
         {
-            user.Login = "";
-            user.Password = "";
-            user.Person = null;
-            user.RegistrationDate = new DateTime(1900, 12, 12);
-
+            var user = Factory.GetComponent<IUserBusiness>();
             user.RoleID = (int)UserRole.Guest;
             return user;
         }
 
-        public IUserBusiness Registration(IUserBusiness user)
+        public IUserBusiness Registration(IUserBusiness user, int roleID)
         {
-            if (user != null && user.RoleID == (int)UserRole.Guest && user.Login.Count() > 6 && user.Password.Count() > 8)
+            if (user != null && user.RoleID == (int)UserRole.Guest && user.Login.Count() > 6 && user.Password.Count() > 8 && roleID>=(int)UserRole.Admin && roleID <= (int)UserRole.Guest)
             {
                 var person = user.Person;
                 var emailPattern = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
@@ -62,9 +58,9 @@ namespace Shop.Business.Service
                 {
                     var address = person.Address;
 
-
                     if (address.City != null && !string.IsNullOrWhiteSpace(address.House) && !string.IsNullOrWhiteSpace(address.Street))
                     {
+                        user.RoleID = roleID;
                         _userRepository.Save((UserBusiness)user);
                     }
                 }
@@ -72,15 +68,20 @@ namespace Shop.Business.Service
             return user;
         }
 
-        public void SendPassword(string email)
+        public bool SendPassword(string email)
         {
             var emailService = Factory.GetComponent<IEmailService>();
+            var currUser =  _userRepository.GetAll().FirstOrDefault(user => user.Person.Email == email);
 
-            string title = "Shop password recovery";
-            string body = "Your password: " + _userRepository.GetAll().FirstOrDefault(user => user.Person.Email == email).Password;
-            string userEmail = "testshopemail@gmail.com";
-
-            emailService.SendEmail(userEmail, title, body);           
+            if (currUser != null)
+            {
+                string title = "Shop password recovery";
+                string body = "Your password: " + currUser.Password;
+                string userEmail = "testshopemail@gmail.com";
+                emailService.SendEmail(userEmail, title, body);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -11,6 +11,6 @@ namespace Shop.Business.Repository.Contracts
 {
     public interface IProductRepository : IRepository<IProductBusiness>
     {
-        IList<IProductBusiness> SearchProducts(string search);
+        IQueryable<IProductBusiness> SearchProducts(string search);
     }
 }

@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Banner : IBanner, IEntity<Banner>
+    public partial class Banner : EntityBase, IBanner
     {
         private EntitySet<IImage> _images;
 
+        public int Identifier { get { return ID; } }
 
         partial void OnCreated()
         {
             _images = new EntitySet<IImage>(OnAddImage, OnRemoveImage);
-        }
-
-        public int Identifier { get; set; }
+        }       
 
         ISupplier IBanner.Supplier
         {

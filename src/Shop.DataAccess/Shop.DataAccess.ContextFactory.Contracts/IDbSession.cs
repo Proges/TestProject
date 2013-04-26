@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.DataAccess.Database.Contracts
+namespace Shop.DataAccess.ContextFactory.Contracts
 {
-    public interface IEntity<T>
+    public interface IDbSession
     {
-        T Identifier { get; }
+        IContextFactory ContextFactory { get; }
     }
 }

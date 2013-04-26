@@ -7,7 +7,7 @@ using System.Data.Linq;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IAddress : IEntity<IBanner>
+    public interface IAddress : IEntityBase, IEntity<int>
     {
         int ID { get; set; }
         int CityID { get; set; }

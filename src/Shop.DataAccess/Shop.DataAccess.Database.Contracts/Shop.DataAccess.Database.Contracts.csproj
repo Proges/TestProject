@@ -47,6 +47,7 @@
     <Compile Include="ICategory.cs" />
     <Compile Include="ICity.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="IEntityBase.cs" />
     <Compile Include="IFeedback.cs" />
     <Compile Include="IImage.cs" />
     <Compile Include="ILegalPerson.cs" />

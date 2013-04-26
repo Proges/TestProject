@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Log : EntityBase, ILog
+    public abstract class EntityBase : IEntityBase
     {
-        public int Identifier { get { return ID; } }
+        public virtual bool IsValid { get { return true; } }
+        public virtual void Validate() { }
+        public virtual string GetErrors() { return ""; }
     }
 }

@@ -3,6 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shop.Business.Service.Tests.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Moq;
+using System.Configuration;
+using System.Data.Linq.Mapping;
+using System.Data.Linq;
 
 namespace Shop.Business.Service.Tests
 {
@@ -67,7 +72,7 @@ namespace Shop.Business.Service.Tests
                 new TestUser(){ ID = 5, Login = "User5", Password = "psw5" },
                 new TestUser(){ ID = 6, Login = "User6", Password = "psw6" }
             };
-
+            var z = (ITable)userRepository;
             var user = userRepository.FirstOrDefault(u => u.Login == "User3" && u.Password == "psw3");
             Assert.AreEqual(3, user.ID);
         }
@@ -75,7 +80,77 @@ namespace Shop.Business.Service.Tests
         [TestMethod]
         public void ServiceTests_UserService_LogOut()
         {
+            var user = new TestUser() { ID = 1, Login = "User1", Password = "psw1", UserRoleID = 1, 
+                Person = new TestPerson(){ 
+                    Address=new TestAddress(){ 
+                        House="TestHouse", Street="TestStreet"}, 
+                    Email="test@test.com", Name="TestName", SecondName="TestSecondName"}, 
+                    RegistrationDate = DateTime.Now 
+            };
 
+            user.Login = "";
+            user.Password = "";
+            user.Person = null;
+            user.UserRoleID = 3;
+            user.RegistrationDate = DateTime.Now;
+
+            Assert.AreEqual("", user.Login);
+            Assert.AreEqual("", user.Password);
+            Assert.IsNull(user.Person);
+            Assert.AreEqual(3, user.UserRoleID);
+            Assert.AreEqual(DateTime.Now.Date, user.RegistrationDate.Date);
+        }
+
+        [TestMethod]
+        public void ServiceTests_UserService_Registration()
+        {
+            var roleID = 2;
+            var user = new TestUser()
+            {
+                ID = 1,
+                Login = "TestUser1",
+                Password = "testpswd1",
+                UserRoleID = 3,
+                Person = new TestPerson()
+                {
+                    Address = new TestAddress()
+                    {
+                        House = "TestHouse",
+                        Street = "TestStreet"
+                    },
+                    Email = "test@test.com",
+                    Name = "TestName",
+                    SecondName = "TestSecondName"
+                },
+                RegistrationDate = DateTime.Now
+            };
+            var save = false;
+            MappingSource mapping = new AttributeMappingSource();
+            var context = new Mock<TestDataContext>(ConfigurationManager.ConnectionStrings["ShopTestConnectionString"].ConnectionString, mapping);
+            context.Setup(con => con.GetTestTable(typeof(TestUser)).InsertOnSubmit(It.IsAny<TestUser>())).Callback(() => save = true);
+
+
+            if (user != null && user.UserRoleID == 3 && user.Login.Count() > 6 && user.Password.Count() > 8 && roleID >= 1 && roleID <= 3)
+            {
+                var person = user.Person;
+                var emailPattern = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
+
+                if (person != null && person.Address != null && Regex.IsMatch(person.Email, emailPattern) &&
+                    !string.IsNullOrWhiteSpace(person.Name) && !string.IsNullOrWhiteSpace(person.SecondName))
+                {
+                    var address = person.Address;
+
+                    if (!string.IsNullOrWhiteSpace(address.House) && !string.IsNullOrWhiteSpace(address.Street))
+                    {
+                        user.UserRoleID = roleID;
+                        context.Object.GetTestTable(typeof(TestUser)).InsertOnSubmit(user);
+                        Assert.IsTrue(save);
+                        return;
+                    }
+                }
+            }
+
+            Assert.Fail("Validation was fail");
         }
     }
 }

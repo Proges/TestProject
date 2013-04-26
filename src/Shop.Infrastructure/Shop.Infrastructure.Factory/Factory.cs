@@ -33,7 +33,6 @@ namespace Shop.Infrastructure.Factory
                 ContainerElement repositoryElement = section.Containers["repositories"];
                 ContainerElement serviceElement = section.Containers["services"];
                 ContainerElement managerElement = section.Containers["managers"];
-                                
 
                 if (objectElement != null) 
                 {

@@ -4,6 +4,7 @@ using Microsoft.Practices.Unity.Configuration;
 using Shop.Business.Data;
 using Shop.Business.Repository;
 using Shop.Business.Repository.Contracts;
+using Shop.DataAccess.ContextFactory;
 using Shop.DataAccess.ContextFactory.Contracts;
 using Shop.DataAccess.Database;
 using Shop.DataAccess.Database.Contracts;
@@ -26,9 +27,11 @@ namespace Shop.UI.Public.Controllers
     {
         //
         // GET: /Home/
-
+      
         public ActionResult Index()
         {
+            var z = Factory.GetRepository<IUserRepository>();
+            z.GetByID(1);
             return View();
         }
     }

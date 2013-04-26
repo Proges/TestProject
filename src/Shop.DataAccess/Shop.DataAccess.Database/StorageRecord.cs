@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class StorageRecord : IStorageRecord, IEntity<StorageRecord>
+    public partial class StorageRecord : EntityBase, IStorageRecord
     {
-        public int Identifier { get; set; }
+        public int Identifier { get { return ID; } }
 
         IProduct IStorageRecord.Product
         {

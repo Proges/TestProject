@@ -4,8 +4,8 @@ CREATE TABLE [dbo].[StorageRecords]
 [ProductID] [int] NOT NULL,
 [UserID] [int] NOT NULL,
 [SupplierID] [int] NULL,
-[Debit] [int] NULL,
-[Credit] [int] NULL,
+[Debit] [int] NOT NULL,
+[Credit] [int] NOT NULL,
 [Date] [datetime] NOT NULL
 )
 ALTER TABLE [dbo].[StorageRecords] ADD

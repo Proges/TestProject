@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Category : ICategory, IEntity<Category>
+    public partial class Category : EntityBase, ICategory
     {
         private EntitySet<IProduct> _products;
+
+        public int Identifier { get { return ID; } }
 
         partial void OnCreated()
         {
             _products = new EntitySet<IProduct>(OnAddProduct, OnRemoveProduct);
-        }
-
-        public int Identifier { get; set; }
+        }        
 
         IList<ICategory> ICategory.Categories
         {

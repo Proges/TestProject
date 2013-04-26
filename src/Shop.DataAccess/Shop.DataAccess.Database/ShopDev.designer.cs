@@ -5371,9 +5371,9 @@ namespace Shop.DataAccess.Database
 		
 		private System.Nullable<int> _SupplierID;
 		
-		private System.Nullable<int> _Debit;
+		private int _Debit;
 		
-		private System.Nullable<int> _Credit;
+		private int _Credit;
 		
 		private System.DateTime _Date;
 		
@@ -5395,9 +5395,9 @@ namespace Shop.DataAccess.Database
     partial void OnUserIDChanged();
     partial void OnSupplierIDChanging(System.Nullable<int> value);
     partial void OnSupplierIDChanged();
-    partial void OnDebitChanging(System.Nullable<int> value);
+    partial void OnDebitChanging(int value);
     partial void OnDebitChanged();
-    partial void OnCreditChanging(System.Nullable<int> value);
+    partial void OnCreditChanging(int value);
     partial void OnCreditChanged();
     partial void OnDateChanging(System.DateTime value);
     partial void OnDateChanged();
@@ -5503,8 +5503,8 @@ namespace Shop.DataAccess.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Debit", DbType="Int")]
-		public System.Nullable<int> Debit
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Debit", DbType="Int NOT NULL")]
+		public int Debit
 		{
 			get
 			{
@@ -5523,8 +5523,8 @@ namespace Shop.DataAccess.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Credit", DbType="Int")]
-		public System.Nullable<int> Credit
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Credit", DbType="Int NOT NULL")]
+		public int Credit
 		{
 			get
 			{

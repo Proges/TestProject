@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Person : IPerson, IEntity<Person>
+    public partial class Person : EntityBase, IPerson
     {
-        public int Identifier { get; set; }
+        public int Identifier { get { return ID; } }
         
         IList<IUser> IPerson.Users
         {

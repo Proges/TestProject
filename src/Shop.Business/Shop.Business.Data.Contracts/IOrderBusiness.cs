@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Business.Data.Contracts
 {
-    public interface IOrderBusiness : IOrder, IEntity<IOrderBusiness>
+    public interface IOrderBusiness : IOrder
     {
         
     }

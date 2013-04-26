@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database
 {
-    public partial class Supplier : ISupplier, IEntity<Supplier>
+    public partial class Supplier : EntityBase, ISupplier
     {
-        public int Identifier { get; set; }
+        public int Identifier { get { return ID; } }
 
         private EntitySet<IProduct> _products;
 

@@ -10,53 +10,44 @@ namespace Shop.Business.Data
 {
     public class Cart : ICart
     {
-        private Dictionary<int, int> _cart;
+        private Dictionary<IProductBusiness, int> _cart;
+        private IUserBusiness _user;
 
-        public Cart()
+
+        public IUserBusiness User { get { return _user; } }
+
+        public Cart(IUserBusiness user)
         {
-            _cart = new Dictionary<int, int>();
+            _cart = new Dictionary<IProductBusiness, int>();
+            _user = user;
         }
-
-        public bool AddToCart(int productID, int count)
+        
+        public void AddToCart(IProductBusiness product, int count)
         {
-            var currProduct = _cart.FirstOrDefault(product => product.Key == productID);
-
-            if (currProduct.Key != null)
+            if (_cart.Keys.FirstOrDefault(p => p.ID == product.ID) == null)
             {
-                var newCount = currProduct.Value + count;
-
-                _cart.Remove(productID);
-                _cart.Add(productID, newCount);
-                return true;
+                _cart.Add(product, count);
             }
-
-            _cart.Add(productID, count);
-            return true;
         }
 
-        public bool RemoveFromCart(int productID, int count)
+        public void RemoveFromCart(IProductBusiness product, int count)
         {
-            var currProduct = _cart.FirstOrDefault(product => product.Key == productID);
-
-            if (currProduct.Key != null)
-            {
+            var currProduct = _cart.FirstOrDefault(prod => prod.Key.ID == product.ID);
+            
                 var newCount = currProduct.Value - count;
 
                 if (newCount >= 1)
                 {
-                    _cart.Remove(productID);
-                    _cart.Add(productID, newCount);
+                    _cart.Remove(product);
+                    _cart.Add(product, newCount);
                 }
                 else
                 {
-                    _cart.Remove(productID);                    
+                    _cart.Remove(product);                    
                 }
-                return true;
-            }
-            return false;
         }
 
-        public Dictionary<int, int> GetCart()
+        public Dictionary<IProductBusiness, int> GetCart()
         {
             return _cart;
         }

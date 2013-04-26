@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IStorageRecord : IEntity<IStorageRecord>
+    public interface IStorageRecord : IEntityBase, IEntity<int>
     {
         int ID { get; set; }
         int ProductID { get; set; }
         int UserID { get; set; }
-        int? Debit { get; set; }
-        int? Credit { get; set; }
+        int Debit { get; set; }
+        int Credit { get; set; }
         DateTime Date { get; set; }
         IProduct Product { get; set; }
         IUser User { get; set; }

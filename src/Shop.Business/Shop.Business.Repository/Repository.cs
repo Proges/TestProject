@@ -15,44 +15,32 @@ using System.Threading.Tasks;
 namespace Shop.Business.Repository
 {
     public class Repository<T> : IRepository<T> 
-        where T: IEntity<T>
+        where T: IEntity<int>
     {
-        protected IContextFactory _contextFactory;
+        private DataContext _context;
 
-        
         public Repository()
         {
-            _contextFactory = Factory.GetComponent<IContextFactory>();
+            _context = DbSession.Instance.ContextFactory.GetContext();
         }
         
         public IQueryable<T> GetAll()
         {
-            var context = _contextFactory.GetContext();
-            var type = Factory.GetComponent<T>().GetType().BaseType;
-            return (IQueryable<T>)(context.GetTable(type).Cast<T>());           
+            return (IQueryable<T>)(_context.GetTable(ResolveType()).Cast<T>());           
         }
 
         public T GetByID(int ID)
         {
-            var context = _contextFactory.GetContext();
-            var type = Factory.GetComponent<T>().GetType().BaseType;
-            return ((IQueryable<T>)(context.GetTable(type).Cast<T>())).Single(entity => entity.Identifier == ID);
+            return _context.GetTable(ResolveType()).Cast<T>().FirstOrDefault(entity => entity.Identifier == ID);
         }
 
         public T Save(T entity)
-        {           
-            var context = _contextFactory.GetContext();
-            var type = Factory.GetComponent<T>().GetType().BaseType;
-            var table = (IQueryable<T>)(context.GetTable(type).Cast<T>());
-            var currEntity = table.FirstOrDefault(ent => ent.Identifier == entity.Identifier);
+        {
+            var table = _context.GetTable(ResolveType());
 
-            if (currEntity == null)
+            if (table.GetOriginalEntityState(entity) == null)
             {
-                context.GetTable(type).InsertOnSubmit(entity);
-            }
-            else
-            {
-                currEntity = entity;
+                table.InsertOnSubmit(entity);
             }
 
             return entity;
@@ -60,14 +48,15 @@ namespace Shop.Business.Repository
 
         public void Delete(T entity)
         {
-            var context = _contextFactory.GetContext();
-            var type = Factory.GetComponent<T>().GetType().BaseType;
-            var table = (IQueryable<T>)(context.GetTable(type).Cast<T>());
-
-            if (table.FirstOrDefault(ent => ent.Identifier == entity.Identifier) != null)
+            if (GetByID(entity.Identifier) != null)
             {
-                context.GetTable(type).DeleteOnSubmit(entity);
+                _context.GetTable(ResolveType()).DeleteOnSubmit(entity);
             }
+        }
+
+        private Type ResolveType()
+        {
+            return Factory.GetComponent<T>().GetType().BaseType;            
         }
     }
 }

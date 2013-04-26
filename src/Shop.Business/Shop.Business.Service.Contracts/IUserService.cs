@@ -10,8 +10,8 @@ namespace Shop.Business.Service.Contracts
     public interface IUserService
     {
         IUserBusiness LogIn(string login, string password);
-        IUserBusiness LogOut(IUserBusiness user);
-        IUserBusiness Registration(IUserBusiness user);
-        void SendPassword(string email);
+        IUserBusiness LogOut();
+        IUserBusiness Registration(IUserBusiness user, int roleID);
+        bool SendPassword(string email);
     }
 }

@@ -46,6 +46,7 @@
     <Compile Include="Brand.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="City.cs" />
+    <Compile Include="EntityBase.cs" />
     <Compile Include="Enumerators\DeliverType.cs" />
     <Compile Include="Enumerators\PayType.cs" />
     <Compile Include="Enumerators\UserRole.cs" />

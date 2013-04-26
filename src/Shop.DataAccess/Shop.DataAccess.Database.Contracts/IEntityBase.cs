@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Shop.DataAccess.Database.Contracts
 {
-    public interface IEntity<T>
+    public interface IEntityBase
     {
-        T Identifier { get; }
+        bool IsValid { get; }
+        void Validate();
+        string GetErrors();
     }
 }

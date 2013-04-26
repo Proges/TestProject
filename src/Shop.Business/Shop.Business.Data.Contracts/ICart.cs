@@ -8,8 +8,9 @@ namespace Shop.Business.Data.Contracts
 {
     public interface ICart
     {
-        bool AddToCart(int productID, int count);
-        bool RemoveFromCart(int productID, int count);
-        Dictionary<int, int> GetCart();
+        IUserBusiness User { get; }
+        void AddToCart(IProductBusiness product, int count);
+        void RemoveFromCart(IProductBusiness product, int count);
+        Dictionary<IProductBusiness, int> GetCart();
     }
 }

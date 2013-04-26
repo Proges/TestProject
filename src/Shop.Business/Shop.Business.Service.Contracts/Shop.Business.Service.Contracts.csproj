@@ -42,6 +42,7 @@
     <Compile Include="IEmailService.cs" />
     <Compile Include="IOrderService.cs" />
     <Compile Include="IProductService.cs" />
+    <Compile Include="IStorageRecordService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\Shop.Business.Data.Contracts\Shop.Business.Data.Contracts.csproj">
       <Project>{a282b555-24b4-4b5b-846a-bd371fc521fd}</Project>
       <Name>Shop.Business.Data.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shop.Business.Data\Shop.Business.Data.csproj">
+      <Project>{05db2b27-e6fe-418a-bb49-e629b5923e00}</Project>
+      <Name>Shop.Business.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
